@@ -536,6 +536,230 @@
             font-size: 0.9rem;
             display: none;
         }
+
+        /* Booking Section Styles */
+        .booking-section {
+            margin: 4rem 0;
+            background: var(--bg-darker);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--elevation-2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .booking-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .booking-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: var(--border-radius-sm);
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .form-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .booking-form .form-input,
+        .booking-form select,
+        .booking-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-sm);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .booking-form .form-input:focus,
+        .booking-form select:focus,
+        .booking-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(58, 134, 255, 0.2);
+        }
+
+        .time-slots,
+        .seats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .time-slot,
+        .seat {
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition-fast);
+            font-size: 0.9rem;
+        }
+
+        .time-slot:hover,
+        .seat:hover {
+            border-color: var(--primary);
+            background: rgba(58, 134, 255, 0.1);
+        }
+
+        .time-slot.selected,
+        .seat.selected {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .payment-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .payment-option input[type="radio"] {
+            accent-color: var(--primary);
+        }
+
+        .confirmation-section {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(6, 214, 160, 0.1), rgba(58, 134, 255, 0.1));
+            border: 1px solid rgba(6, 214, 160, 0.2);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .confirmation-section h3 {
+            color: var(--success);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .confirmation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .confirmation-item {
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-sm);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .confirmation-item strong {
+            color: var(--primary);
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .cost-item {
+            background: linear-gradient(135deg, rgba(255, 190, 11, 0.1), rgba(255, 0, 110, 0.1));
+            border-color: rgba(255, 190, 11, 0.3);
+        }
+
+        .total-item {
+            background: linear-gradient(135deg, rgba(6, 214, 160, 0.2), rgba(58, 134, 255, 0.2));
+            border-color: rgba(6, 214, 160, 0.4);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .confirm-button {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(90deg, var(--success), var(--primary));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .confirm-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(6, 214, 160, 0.3);
+        }
+
+        .selected-display {
+            margin-top: 0.75rem;
+            padding: 0.5rem;
+            background: rgba(6, 214, 160, 0.1);
+            border-radius: var(--border-radius-sm);
+            color: var(--success);
+            font-size: 0.9rem;
+            border: 1px solid rgba(6, 214, 160, 0.2);
+        }
         
         .footer {
             margin-top: 4rem;
@@ -570,6 +794,11 @@
             .modal-content {
                 animation: none;
             }
+
+            .time-slot.selected,
+            .seat.selected {
+                transform: none;
+            }
         }
         
         /* Responsive adjustments */
@@ -591,6 +820,19 @@
             .skip-btn {
                 padding: 6px 15px;
                 font-size: 0.9rem;
+            }
+
+            .booking-form {
+                grid-template-columns: 1fr;
+            }
+
+            .confirmation-section {
+                grid-column: span 1;
+            }
+
+            .time-slots,
+            .seats {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             }
         }
     </style>
@@ -728,6 +970,206 @@
                 </article>
             </div>
         </section>
+
+        <!-- NEW BOOKING SECTION -->
+        <section class="booking-section" id="booking">
+            <div class="section-header">
+                <h2 class="section-title">📅 Book Your Appointment</h2>
+                <p class="section-subtitle">Schedule your visit with our experienced healthcare professionals</p>
+            </div>
+            
+            <div class="booking-form">
+                <!-- Doctor & Service Selection -->
+                <div class="form-section">
+                    <h3>👨‍⚕️ Doctor & Service</h3>
+                    <form id="doctor-form">
+                        <div class="form-group">
+                            <label for="doctor-name" class="form-label">Doctor Name*</label>
+                            <input type="text" id="doctor-name" name="doctor-name" class="form-input" placeholder="Enter doctor's name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="doctor-specialty" class="form-label">Specialty*</label>
+                            <input type="text" id="doctor-specialty" name="doctor-specialty" class="form-input" placeholder="e.g., Cardiology, Neurology" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service" class="form-label">Service Type*</label>
+                            <select id="service" name="service" required>
+                                <option value="">Select Service</option>
+                                <option value="consultation">General Consultation - ₹500</option>
+                                <option value="checkup">Health Checkup - ₹1,000</option>
+                                <option value="therapy">Therapy Session - ₹1,500</option>
+                                <option value="emergency">Emergency Care - ₹2,000</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <!-- Time Slots -->
+                    <div class="form-group">
+                        <label class="form-label">Available Time Slots*</label>
+                        <div id="time-slots" class="time-slots">
+                            <button type="button" class="time-slot">09:00 AM</button>
+                            <button type="button" class="time-slot">10:00 AM</button>
+                            <button type="button" class="time-slot">11:00 AM</button>
+                            <button type="button" class="time-slot">02:00 PM</button>
+                            <button type="button" class="time-slot">03:00 PM</button>
+                            <button type="button" class="time-slot">04:00 PM</button>
+                        </div>
+                        <div class="selected-display" id="selected-time" style="display:none;"></div>
+                    </div>
+
+                    <!-- Seats -->
+                    <div class="form-group">
+                        <label class="form-label">Select Seats</label>
+                        <div id="seats" class="seats">
+                            <button type="button" class="seat">Regular A1 - ₹100</button>
+                            <button type="button" class="seat">Regular A2 - ₹100</button>
+                            <button type="button" class="seat">Regular B1 - ₹100</button>
+                            <button type="button" class="seat">Emergency E1 - ₹200</button>
+                            <button type="button" class="seat">Emergency E2 - ₹200</button>
+                        </div>
+                        <div class="selected-display" id="selected-seats-display" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <!-- Patient Information -->
+                <div class="form-section">
+                    <h3>👤 Patient Information</h3>
+                    <form id="patient-form">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name*</label>
+                            <input type="text" id="name" name="name" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email*</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number*</label>
+                            <input type="tel" id="phone" name="phone" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea id="address" name="address" rows="2" class="form-input"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="age" class="form-label">Age</label>
+                            <input type="number" id="age" name="age" class="form-input" min="0" max="120">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select id="gender" name="gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <!-- Payment Options -->
+                    <div class="form-group">
+                        <label class="form-label">Payment Method*</label>
+                        <div id="payment-options" class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="Credit Card">
+                                <span>💳 Credit Card</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="Debit Card">
+                                <span>💳 Debit Card</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="Cash">
+                                <span>💵 Cash Payment</span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="payment" value="Online Payment">
+                                <span>🌐 Online Payment</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confirmation Section -->
+                <div class="confirmation-section">
+                    <h3>📋 Booking Summary</h3>
+                    <div class="confirmation-grid">
+                        <div class="confirmation-item">
+                            <strong>Doctor:</strong>
+                            <span id="confirm-doctor">Not selected</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Specialty:</strong>
+                            <span id="confirm-specialty">Not selected</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Service:</strong>
+                            <span id="confirm-service">Not selected</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Time:</strong>
+                            <span id="confirm-time">Not selected</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Seats:</strong>
+                            <span id="confirm-seats">None</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Patient:</strong>
+                            <span id="confirm-name">Not provided</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Email:</strong>
+                            <span id="confirm-email">Not provided</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Phone:</strong>
+                            <span id="confirm-phone">Not provided</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Address:</strong>
+                            <span id="confirm-address">Not provided</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Age:</strong>
+                            <span id="confirm-age">Not provided</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Gender:</strong>
+                            <span id="confirm-gender">Not provided</span>
+                        </div>
+                        <div class="confirmation-item">
+                            <strong>Payment:</strong>
+                            <span id="confirm-payment">Not selected</span>
+                        </div>
+                        <div class="confirmation-item cost-item">
+                            <strong>Service Cost:</strong>
+                            ₹<span id="confirm-cost">0</span>
+                        </div>
+                        <div class="confirmation-item cost-item">
+                            <strong>GST (18%):</strong>
+                            ₹<span id="confirm-gst">0.00</span>
+                        </div>
+                        <div class="confirmation-item total-item">
+                            <strong>Grand Total:</strong>
+                            ₹<span id="confirm-grand-total">0.00</span>
+                        </div>
+                    </div>
+                    
+                    <button id="confirm-booking" class="confirm-button">
+                        ✅ Confirm Booking & Generate Bill
+                    </button>
+                </div>
+            </div>
+        </section>
     </main>
     
     <footer class="footer">
@@ -736,9 +1178,12 @@
     </footer>
 </div>
 
+<!-- Include jsPDF library for PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // DOM Elements
+        // DOM Elements - Original
         const splash = document.getElementById('splash');
         const splashVideo = document.getElementById('splashVideo');
         const mainContent = document.getElementById('main-content');
@@ -760,9 +1205,39 @@
         const modal = document.getElementById('loginModal');
         const modalTitle = document.getElementById('modalTitle');
         
+        // Booking elements
+        const doctorForm = document.getElementById('doctor-form');
+        const serviceSelect = document.getElementById('service');
+        const timeSlots = document.querySelectorAll('#time-slots .time-slot');
+        const seats = document.querySelectorAll('#seats .seat');
+        const patientForm = document.getElementById('patient-form');
+        const paymentOptions = document.querySelectorAll('#payment-options input');
+        const confirmBookingBtn = document.getElementById('confirm-booking');
+
         // Video State
         let videoPlaying = false;
         let videoPlayedOnce = false;
+
+        // Booking Variables
+        let selectedTimeSlot = null;
+        let selectedSeats = [];
+        let totalCost = 0;
+        let gst = 0;
+        let grandTotal = 0;
+
+        // Service Prices
+        const servicePrices = {
+            consultation: 500,
+            checkup: 1000,
+            therapy: 1500,
+            emergency: 2000,
+        };
+
+        // Seat Prices
+        const seatPrices = {
+            regular: 100,
+            emergency: 200,
+        };
 
         // User database with proper redirect URLs
         const users = {
@@ -940,8 +1415,278 @@
             document.documentElement.setAttribute('data-theme', theme);
             themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
         }
+
+        // BOOKING FUNCTIONALITY
+        // Time Slot Selection
+        timeSlots.forEach(slot => {
+            slot.addEventListener('click', () => {
+                timeSlots.forEach(s => s.classList.remove('selected'));
+                slot.classList.add('selected');
+                selectedTimeSlot = slot.textContent;
+                
+                // Show selected time
+                const selectedTimeDisplay = document.getElementById('selected-time');
+                selectedTimeDisplay.textContent = `✅ Selected: ${selectedTimeSlot}`;
+                selectedTimeDisplay.style.display = 'block';
+                
+                updateConfirmation();
+            });
+        });
+
+        // Seat Selection
+        seats.forEach(seat => {
+            seat.addEventListener('click', () => {
+                seat.classList.toggle('selected');
+                selectedSeats = Array.from(document.querySelectorAll('#seats .seat.selected')).map(s => s.textContent);
+
+                // Calculate total cost
+                const selectedService = serviceSelect.value;
+                totalCost = servicePrices[selectedService] || 0;
+
+                selectedSeats.forEach(seat => {
+                    totalCost += seat.toLowerCase().includes('emergency') ? seatPrices.emergency : seatPrices.regular;
+                });
+
+                // Show selected seats
+                const selectedSeatsDisplay = document.getElementById('selected-seats-display');
+                if (selectedSeats.length > 0) {
+                    selectedSeatsDisplay.textContent = `✅ Selected: ${selectedSeats.join(', ')}`;
+                    selectedSeatsDisplay.style.display = 'block';
+                } else {
+                    selectedSeatsDisplay.style.display = 'none';
+                }
+
+                updateConfirmation();
+            });
+        });
+
+        // Service selection change
+        serviceSelect.addEventListener('change', () => {
+            updateConfirmation();
+        });
+
+        // Patient form inputs
+        const patientInputs = ['name', 'email', 'phone', 'address', 'age', 'gender'];
+        patientInputs.forEach(inputId => {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.addEventListener('input', updateConfirmation);
+                input.addEventListener('change', updateConfirmation);
+            }
+        });
+
+        // Doctor form inputs
+        const doctorInputs = ['doctor-name', 'doctor-specialty'];
+        doctorInputs.forEach(inputId => {
+            const input = document.getElementById(inputId);
+            if (input) {
+                input.addEventListener('input', updateConfirmation);
+            }
+        });
+
+        // Payment method change
+        paymentOptions.forEach(option => {
+            option.addEventListener('change', updateConfirmation);
+        });
+
+        // Update Confirmation Details
+        function updateConfirmation() {
+            const doctorName = document.getElementById('doctor-name').value;
+            const doctorSpecialty = document.getElementById('doctor-specialty').value;
+            const service = serviceSelect.options[serviceSelect.selectedIndex]?.text || '';
+            const patientName = document.getElementById('name').value;
+            const patientEmail = document.getElementById('email').value;
+            const patientPhone = document.getElementById('phone').value;
+            const patientAddress = document.getElementById('address').value;
+            const patientAge = document.getElementById('age').value;
+            const patientGender = document.getElementById('gender').value;
+            const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value || 'Not selected';
+
+            // Calculate costs
+            const selectedService = serviceSelect.value;
+            totalCost = servicePrices[selectedService] || 0;
+
+            selectedSeats.forEach(seat => {
+                totalCost += seat.toLowerCase().includes('emergency') ? seatPrices.emergency : seatPrices.regular;
+            });
+
+            gst = totalCost * 0.18;
+            grandTotal = totalCost + gst;
+
+            // Update confirmation display
+            document.getElementById('confirm-doctor').textContent = doctorName || 'Not provided';
+            document.getElementById('confirm-specialty').textContent = doctorSpecialty || 'Not provided';
+            document.getElementById('confirm-service').textContent = service || 'Not selected';
+            document.getElementById('confirm-time').textContent = selectedTimeSlot || 'Not selected';
+            document.getElementById('confirm-seats').textContent = selectedSeats.join(', ') || 'None';
+            document.getElementById('confirm-name').textContent = patientName || 'Not provided';
+            document.getElementById('confirm-email').textContent = patientEmail || 'Not provided';
+            document.getElementById('confirm-phone').textContent = patientPhone || 'Not provided';
+            document.getElementById('confirm-address').textContent = patientAddress || 'Not provided';
+            document.getElementById('confirm-age').textContent = patientAge || 'Not provided';
+            document.getElementById('confirm-gender').textContent = patientGender || 'Not provided';
+            document.getElementById('confirm-payment').textContent = paymentMethod;
+            document.getElementById('confirm-cost').textContent = totalCost;
+            document.getElementById('confirm-gst').textContent = gst.toFixed(2);
+            document.getElementById('confirm-grand-total').textContent = grandTotal.toFixed(2);
+        }
+
+        // Confirm Booking and Submit
+        confirmBookingBtn?.addEventListener('click', async () => {
+            // Validate required fields
+            const doctorName = document.getElementById('doctor-name').value;
+            const doctorSpecialty = document.getElementById('doctor-specialty').value;
+            const service = serviceSelect.value;
+            const patientName = document.getElementById('name').value;
+            const patientEmail = document.getElementById('email').value;
+            const patientPhone = document.getElementById('phone').value;
+
+            if (!doctorName || !doctorSpecialty || !service || !selectedTimeSlot || !patientName || !patientEmail || !patientPhone) {
+                alert('Please fill in all required fields and select a time slot.');
+                return;
+            }
+
+            updateConfirmation();
+
+            const appointmentData = {
+                doctorName: doctorName,
+                doctorSpecialty: doctorSpecialty,
+                service: serviceSelect.options[serviceSelect.selectedIndex]?.text || service,
+                timeSlot: selectedTimeSlot,
+                seats: selectedSeats,
+                patientName: patientName,
+                patientEmail: patientEmail,
+                patientPhone: patientPhone,
+                patientAddress: document.getElementById('address').value,
+                patientAge: document.getElementById('age').value,
+                patientGender: document.getElementById('gender').value,
+                paymentMethod: document.querySelector('input[name="payment"]:checked')?.value || 'Not selected',
+                totalCost,
+                gst,
+                grandTotal,
+                bookingDate: new Date().toISOString()
+            };
+
+            try {
+                // Here you can add your API call to save the appointment
+                console.log('Appointment Data:', appointmentData);
+                alert('✅ Booking Confirmed! Your appointment has been scheduled successfully.');
+                
+            } catch (err) {
+                console.error('Error saving appointment:', err);
+                alert('❌ An error occurred while saving your appointment. Please try again.');
+            }
+
+            // Generate PDF Bill
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // Header
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(20);
+                doc.setTextColor(58, 134, 255);
+                doc.text('🏥 MediLong Hospital', 15, 20);
+                doc.setFontSize(16);
+                doc.text('Appointment Booking Bill', 15, 30);
+                
+                doc.setDrawColor(58, 134, 255);
+                doc.setLineWidth(0.5);
+                doc.line(15, 35, 195, 35);
+
+                // Booking Details
+                doc.setFontSize(12);
+                doc.setTextColor(0, 0, 0);
+                doc.setFont('helvetica', 'bold');
+                
+                let yPos = 50;
+                
+                doc.text('Doctor Details:', 15, yPos);
+                doc.setFont('helvetica', 'normal');
+                doc.text(`Name: ${appointmentData.doctorName}`, 20, yPos + 10);
+                doc.text(`Specialty: ${appointmentData.doctorSpecialty}`, 20, yPos + 20);
+                
+                yPos += 35;
+                doc.setFont('helvetica', 'bold');
+                doc.text('Service Details:', 15, yPos);
+                doc.setFont('helvetica', 'normal');
+                doc.text(`Service: ${appointmentData.service}`, 20, yPos + 10);
+                doc.text(`Time Slot: ${appointmentData.timeSlot}`, 20, yPos + 20);
+                
+                if (appointmentData.seats.length > 0) {
+                    doc.text(`Selected Seats: ${appointmentData.seats.join(', ')}`, 20, yPos + 30);
+                    yPos += 10;
+                }
+                
+                yPos += 35;
+                doc.setFont('helvetica', 'bold');
+                doc.text('Patient Details:', 15, yPos);
+                doc.setFont('helvetica', 'normal');
+                doc.text(`Name: ${appointmentData.patientName}`, 20, yPos + 10);
+                doc.text(`Email: ${appointmentData.patientEmail}`, 20, yPos + 20);
+                doc.text(`Phone: ${appointmentData.patientPhone}`, 20, yPos + 30);
+                
+                if (appointmentData.patientAddress) {
+                    doc.text(`Address: ${appointmentData.patientAddress}`, 20, yPos + 40);
+                    yPos += 10;
+                }
+                if (appointmentData.patientAge) {
+                    doc.text(`Age: ${appointmentData.patientAge}`, 20, yPos + 40);
+                }
+                if (appointmentData.patientGender) {
+                    doc.text(`Gender: ${appointmentData.patientGender}`, 20, yPos + 50);
+                    yPos += 10;
+                }
+                
+                yPos += 55;
+                doc.setFont('helvetica', 'bold');
+                doc.text('Payment Details:', 15, yPos);
+                doc.setFont('helvetica', 'normal');
+                doc.text(`Method: ${appointmentData.paymentMethod}`, 20, yPos + 10);
+                
+                yPos += 25;
+                doc.setFont('helvetica', 'bold');
+                doc.text('Cost Breakdown:', 15, yPos);
+                doc.setFont('helvetica', 'normal');
+                doc.text(`Service Cost: ₹${appointmentData.totalCost - (appointmentData.seats.length * 100)}`, 20, yPos + 10);
+                
+                if (appointmentData.seats.length > 0) {
+                    const seatCost = appointmentData.totalCost - servicePrices[serviceSelect.value];
+                    doc.text(`Seat Charges: ₹${seatCost}`, 20, yPos + 20);
+                    yPos += 10;
+                }
+                
+                doc.text(`Subtotal: ₹${appointmentData.totalCost}`, 20, yPos + 20);
+                doc.text(`GST (18%): ₹${appointmentData.gst.toFixed(2)}`, 20, yPos + 30);
+                
+                doc.setFont('helvetica', 'bold');
+                doc.text(`Grand Total: ₹${appointmentData.grandTotal.toFixed(2)}`, 20, yPos + 40);
+                
+                // Footer
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                doc.setTextColor(100, 100, 100);
+                doc.text('Thank you for choosing MediLong Hospital!', 15, yPos + 60);
+                doc.text('For any queries, contact us at: info@medilong.com | +91 98765 43210', 15, yPos + 70);
+                doc.text(`Booking Date: ${new Date().toLocaleDateString('en-IN')}`, 15, yPos + 80);
+
+                // Save PDF
+                doc.save(`MediLong_Appointment_${appointmentData.patientName.replace(/\s+/g, '_')}_${new Date().getTime()}.pdf`);
+                
+            } catch (pdfError) {
+                console.error('Error generating PDF:', pdfError);
+                alert('⚠️ Appointment booked successfully, but there was an issue generating the PDF bill.');
+            }
+
+            // Reset form
+            setTimeout(() => {
+                if (confirm('Would you like to book another appointment?')) {
+                    location.reload();
+                }
+            }, 2000);
+        });
         
-        // Event Listeners
+        // Event Listeners - Original
         themeToggle.addEventListener('click', toggleTheme);
         playPauseBtn.addEventListener('click', togglePlayPause);
         muteBtn.addEventListener('click', toggleMute);
@@ -967,6 +1712,7 @@
         // Initialize
         initTheme();
         initializeVideo();
+        updateConfirmation(); // Initialize booking confirmation on page load
         
         // Fallback if video doesn't load
         setTimeout(() => {
