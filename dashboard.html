@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MediLong Receptionist Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      margin: 40px;
+    }
+
+    h1, h2, h3 {
+      color: #008cba;
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      font-size: 26px;
+      margin: 30px 0 10px;
+    }
+
+    h2::before {
+      content: url('https://img.icons8.com/emoji/32/ambulance-emoji.png');
+      margin-right: 10px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .logo-img {
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    .logout-btn {
+      background: #f44336;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    section {
+      margin-top: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+      color: #333;
+    }
+
+    td {
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .status-scheduled {
+      color: green;
+      font-weight: bold;
+    }
+
+    .status-pending {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .action-button, .action-btn {
+      background-color: #008cba;
+      border: none;
+      color: white;
+      padding: 7px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 13px;
+      margin-right: 5px;
+    }
+
+    .action-button:hover, .action-btn:hover {
+      background-color: #006c97;
+    }
+
+    .stats-grid {
+      display: flex;
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: #f0f8ff;
+      padding: 20px;
+      border-radius: 10px;
+      flex: 1;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .footer {
+      margin-top: 60px;
+      border-top: 1px solid #ccc;
+      padding-top: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* Modal */
+    #appointmentModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    #appointmentModal > div {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      position: relative;
+    }
+
+    .patient-search {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .search-btn {
+      background-color: #008cba;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .search-btn:hover {
+      background-color: #0073a6;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <img class="logo-img" src="medilonglogo1.jpg" alt="MediLong Logo" />
+    <div class="logo">MediLong Receptionist</div>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="#dashboard">🏠 Dashboard</a></li>
+        <li><a href="#appointments">📅 Appointments</a></li>
+        <li><a href="#patients">👥 Patient Management</a></li>
+        <li><a href="#doctors">👨‍⚕️ Doctor Management</a></li>
+        <li><a href="#ambulance">🚑 Ambulance Services</a></li>
+        <li><a href="#reports">📄 Reports</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="logout-btn" id="logoutBtn">Logout</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Dashboard Section -->
+  <section id="dashboard">
+    <h1>Welcome to the Receptionist Dashboard</h1>
+    <p>Manage all hospital operations from here.</p>
+    <div class="stats-grid">
+      <div class="stat-card"><h3>Total Appointments</h3><p>120</p></div>
+      <div class="stat-card"><h3>Pending Appointments</h3><p>15</p></div>
+      <div class="stat-card"><h3>Patient Registrations</h3><p>80</p></div>
+    </div>
+  </section>
+
+  <!-- Appointments Section -->
+  <section id="appointments">
+    <h2>Manage Appointments</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Patient Name</th>
+          <th>Doctor</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ramesh Kumar</td>
+          <td>Dr. Arjun (Cardiologist)</td>
+          <td>01/05/2025</td>
+          <td>10:00 AM</td>
+          <td>Scheduled</td>
+          <td>
+            <button class="action-btn view-btn"
+              data-patient="Ramesh Kumar"
+              data-doctor="Dr. Arjun (Cardiologist)"
+              data-date="01/05/2025"
+              data-time="10:00 AM"
+              data-status="Scheduled">View</button>
+            <button class="action-btn">Cancel</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Priya Sharma</td>
+          <td>Dr. Priya (Dermatologist)</td>
+          <td>01/05/2025</td>
+          <td>11:00 AM</td>
+          <td>Pending</td>
+          <td>
+            <button class="action-btn view-btn"
+              data-patient="Priya Sharma"
+              data-doctor="Dr. Priya (Dermatologist)"
+              data-date="01/05/2025"
+              data-time="11:00 AM"
+              data-status="Pending">View</button>
+            <button class="action-btn">Confirm</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Ambulance Section -->
+  <section id="ambulance">
+    <h2>Ambulance Appointments</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Request ID</th>
+          <th>Patient Name</th>
+          <th>Pickup Location</th>
+          <th>Destination</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>AMB-001</td>
+          <td>Suresh Babu</td>
+          <td>Anna Nagar</td>
+          <td>Panimalar Hospital</td>
+          <td>01/05/2025</td>
+          <td>09:00 AM</td>
+          <td class="status-scheduled">Scheduled</td>
+          <td><button class="action-button">Dispatch</button></td>
+        </tr>
+        <tr>
+          <td>AMB-002</td>
+          <td>Meena Kumari</td>
+          <td>T. Nagar</td>
+          <td>Panimalar Hospital</td>
+          <td>01/05/2025</td>
+          <td>10:30 AM</td>
+          <td class="status-pending">Pending</td>
+          <td><button class="action-button">Confirm</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Appointment Modal -->
+  <div id="appointmentModal">
+    <div>
+      <h3>Appointment Details</h3>
+      <p><strong>Patient:</strong> <span id="modalPatient"></span></p>
+      <p><strong>Doctor:</strong> <span id="modalDoctor"></span></p>
+      <p><strong>Date:</strong> <span id="modalDate"></span></p>
+      <p><strong>Time:</strong> <span id="modalTime"></span></p>
+      <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- Patient Management -->
+  <section id="patients">
+    <h2>Patient Management</h2>
+    <div class="patient-search">
+      <input type="text" placeholder="Search by Name, ID, or Condition" />
+      <button class="search-btn">Search</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Patient ID</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Contact</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>12345</td>
+          <td>Ramesh Kumar</td>
+          <td>45</td>
+          <td>+91 123 456 7890</td>
+          <td>
+            <button class="action-btn">View</button>
+            <button class="action-btn">Edit</button>
+          </td>
+        </tr>
+        <tr>
+          <td>67890</td>
+          <td>Priya Sharma</td>
+          <td>35</td>
+          <td>+91 987 654 3210</td>
+          <td>
+            <button class="action-btn">View</button>
+            <button class="action-btn">Edit</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-contact">
+      <p>📍 Panimalar Medical Hospital, Chennai, India</p>
+    </div>
+    <p class="made-by">Made with ❤️ by MediLong Team</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      localStorage.clear();
+      sessionStorage.clear();
+      alert("You have been logged out.");
+      window.location.href = "/signup.html";
+    });
+
+    function closeModal() {
+      document.getElementById("appointmentModal").style.display = "none";
+    }
+
+    document.querySelectorAll(".view-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        document.getElementById("modalPatient").textContent = button.dataset.patient;
+        document.getElementById("modalDoctor").textContent = button.dataset.doctor;
+        document.getElementById("modalDate").textContent = button.dataset.date;
+        document.getElementById("modalTime").textContent = button.dataset.time;
+        document.getElementById("modalStatus").textContent = button.dataset.status;
+        document.getElementById("appointmentModal").style.display = "flex";
+      });
+    });
+  </script>
+</body>
+</html>

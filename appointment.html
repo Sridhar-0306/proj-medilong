@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments - MediLong</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header .logo span {
+            color: #ffdd57;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffdd57;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 150px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .appointments-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            color: #333;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .appointments-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #007bff;
+        }
+
+        .appointments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .appointment-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .appointment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .appointment-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .appointment-card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .appointment-card .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .appointment-card .status.pending {
+            background: #ffeb3b;
+            color: #333;
+        }
+
+        .appointment-card .status.confirmed {
+            background: #4caf50;
+            color: white;
+        }
+
+        .appointment-card .status.cancelled {
+            background: #f44336;
+            color: white;
+        }
+
+        .appointment-card .details {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .appointment-card .details span {
+            display: block;
+            margin: 5px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .appointments-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">MediLong<span>  Panimalar medical hospital</span></div>
+
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Appointments</h1>
+            <p>Manage and track your appointments with ease</p>
+        </section>
+
+        <section class="appointments-container">
+            <h2>Your Appointments</h2>
+            <div class="appointments-grid">
+                <!-- Appointment Card 1 -->
+                <div class="appointment-card">
+                    <h3>Emergency Ambulance</h3>
+                    <p>Booked for immediate medical assistance.</p>
+                    <div class="status confirmed">Confirmed</div>
+                    <div class="details">
+                        <span><strong>Date:</strong> 2023-10-15</span>
+                        <span><strong>Time:</strong> 10:00 AM</span>
+                        <span><strong>Location:</strong> 123 Main St, City</span>
+                    </div>
+                </div>
+
+                <!-- Appointment Card 2 -->
+                <div class="appointment-card">
+                    <h3>Routine Checkup</h3>
+                    <p>Scheduled for a general health checkup.</p>
+                    <div class="status pending">Pending</div>
+                    <div class="details">
+                        <span><strong>Date:</strong> 2023-10-20</span>
+                        <span><strong>Time:</strong> 02:00 PM</span>
+                        <span><strong>Location:</strong> 456 Elm St, City</span>
+                    </div>
+                </div>
+
+
+
+
+                <!-- Add more appointment cards as needed -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 MediLong. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+</body>
+</html>

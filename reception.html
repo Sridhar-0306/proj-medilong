@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Receptionist Dashboard | Medilong</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background-color: #f5f7fa; padding: 20px; font-size: 16px;
+    }
+    .container {
+      max-width: 1200px; margin: 0 auto; display: flex; flex-direction: row; gap: 20px;
+    }
+    /* Sidebar styles */
+    .sidebar {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white; padding: 20px; border-radius: 10px; width: 250px; flex-shrink: 0;
+    }
+    .sidebar h2 { margin-bottom: 20px; font-size: 1.2em; }
+    .sidebar button {
+      display: block; width: 100%; margin: 10px 0; padding: 10px; border: none; border-radius: 5px;
+      background-color: #fff; color: #333; cursor: pointer; font-weight: 600;
+    }
+    .sidebar button:hover { background-color: #fff7f7; }
+    /* Main content styles */
+    .main {
+      flex: 1; background: #fff; padding: 20px; border-radius: 10px;
+    }
+    .header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
+    }
+    h1 { font-size: 1.8em; color: #2c3e50; }
+    #searchBox {
+      padding: 8px 12px; border-radius: 5px; border: 1px solid #ccc; width: 200px;
+    }
+    /* Patient list table */
+    table {
+      width: 100%; border-collapse: collapse; margin-top: 10px;
+    }
+    th, td {
+      padding: 10px; border: 1px solid #ddd; text-align: left;
+    }
+    th { background: #f1f1f1; }
+    tr:hover { background: #f9f9f9; cursor: pointer; }
+    /* Patient detail modal */
+    .modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4);
+      display: none; justify-content: center; align-items: center; z-index: 999;
+    }
+    .modal-content {
+      background: #fff; padding: 20px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 90%; overflow-y: auto;
+      position: relative;
+    }
+    .close-btn {
+      position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5em; cursor: pointer;
+    }
+    /* No data message */
+    .no-data {
+      margin-top: 20px; color: #888; text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Reception Dashboard</h2>
+      <button id="refreshBtn">Refresh Data</button>
+      <button id="statsBtn">Show Stats</button>
+    </div>
+    <!-- Main Content -->
+    <div class="main">
+      <div class="header">
+        <h1>Patient List</h1>
+        <input type='text' id='searchBox' placeholder='Search patients...' />
+      </div>
+      <div id="patientTableContainer">
+        <div class="no-data" id="noDataMsg">Loading patient data...</div>
+      </div>
+      <!-- Patient details modal -->
+      <div class="modal" id="patientModal">
+        <div class="modal-content" id="patientDetails">
+          <button class="close-btn" id="closeModal">&times;</button>
+          <h3>Patient Details</h3>
+          <div id="patientDetailContent"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Set your Render API URL
+    const API_BASE_URL = 'https://final-medilong-2.onrender.com';
+
+    let allPatients = [];
+    let filteredPatients = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchPatients();
+
+      document.getElementById('refreshBtn').addEventListener('click', fetchPatients);
+      document.getElementById('searchBox').addEventListener('input', handleSearch);
+      document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('patientModal').style.display = 'none';
+      });
+    });
+
+    async function fetchPatients() {
+      document.getElementById('noDataMsg').textContent = 'Loading patient data...';
+      document.getElementById('noDataMsg').style.display = 'block';
+      try {
+        const res = await fetch(`${API_BASE_URL}/get_patients.php`);
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          allPatients = data;
+          filteredPatients = [...allPatients];
+          renderTable();
+        } else {
+          document.getElementById('noDataMsg').textContent = 'Failed to load patient data.';
+        }
+      } catch (err) {
+        document.getElementById('noDataMsg').textContent = 'Error fetching data.';
+      }
+    }
+
+    function renderTable() {
+      const container = document.getElementById('patientTableContainer');
+      if (filteredPatients.length === 0) {
+        container.innerHTML = '<div class="no-data">No patients found.</div>';
+        return;
+      }
+      let html = '<table><thead><tr><th>Name</th><th>Age</th><th>Phone</th><th>Gender</th><th>Actions</th></tr></thead><tbody>';
+      filteredPatients.forEach(p => {
+        html += `<tr onclick="viewPatient(${p.id})">
+          <td>${p.full_name}</td>
+          <td>${p.age}</td>
+          <td>${p.phone_number}</td>
+          <td>${p.gender}</td>
+          <td><button onclick="event.stopPropagation(); viewPatient(${p.id})">View</button></td>
+        </tr>`;
+      });
+      html += '</tbody></table>';
+      document.getElementById('patientTableContainer').innerHTML = html;
+    }
+
+    function handleSearch() {
+      const query = document.getElementById('searchBox').value.toLowerCase();
+      filteredPatients = allPatients.filter(p => 
+        p.full_name.toLowerCase().includes(query) ||
+        p.phone_number.toLowerCase().includes(query) ||
+        (p.medical_conditions && p.medical_conditions.toLowerCase().includes(query))
+      );
+      renderTable();
+    }
+
+    async function viewPatient(id) {
+      try {
+        const res = await fetch(`${API_BASE_URL}/get_patient_details.php?id=${id}`);
+        const patient = await res.json();
+        showPatientDetails(patient);
+      } catch { showPatientDetails(null); }
+    }
+
+    function showPatientDetails(patient) {
+      if (!patient || !patient.id) {
+        alert('Patient details not available.');
+        return;
+      }
+      const contentDiv = document.getElementById('patientDetailContent');
+      contentDiv.innerHTML = `
+        <p><strong>Name:</strong> ${patient.full_name}</p>
+        <p><strong>Date of Birth:</strong> ${patient.date_of_birth || 'N/A'}</p>
+        <p><strong>Age:</strong> ${patient.age}</p>
+        <p><strong>Gender:</strong> ${patient.gender}</p>
+        <p><strong>Blood Group:</strong> ${patient.blood_group || 'N/A'}</p>
+        <p><strong>Marital Status:</strong> ${patient.marital_status || 'N/A'}</p>
+        <p><strong>Phone:</strong> ${patient.phone_number}</p>
+        <p><strong>Email:</strong> ${patient.email || 'N/A'}</p>
+        <p><strong>Address:</strong> ${patient.address || 'N/A'}</p>
+        <p><strong>City:</strong> ${patient.city || 'N/A'}</p>
+        <p><strong>State:</strong> ${patient.state || 'N/A'}</p>
+        <p><strong>Zip Code:</strong> ${patient.zip_code || 'N/A'}</p>
+        <p><strong>Height:</strong> ${patient.height_cm || 'N/A'} cm</p>
+        <p><strong>Weight:</strong> ${patient.weight_kg || 'N/A'} kg</p>
+        <p><strong>Allergies:</strong> ${patient.allergies || 'N/A'}</p>
+        <p><strong>Medical Conditions:</strong> ${patient.medical_conditions || 'N/A'}</p>
+        <p><strong>Current Medications:</strong> ${patient.current_medications || 'N/A'}</p>
+        <p><strong>Medical History:</strong> ${patient.medical_history || 'N/A'}</p>
+      `;
+      document.getElementById('patientModal').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>

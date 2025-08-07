@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LifeSave Blood Bank | Donate Blood, Save Lives</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* ===== GLOBAL STYLES ===== */
+    :root {
+      --primary: #e63946;
+      --secondary: #1d3557;
+      --light: #f1faee;
+      --accent: #a8dadc;
+      --dark: #457b9d;
+      --success: #4caf50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: var(--secondary);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .header .sub-heading {
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    /* ===== FORM CONTAINER ===== */
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ===== FORM STYLES ===== */
+    .donation-form {
+      padding: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--secondary);
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+    }
+
+    /* ===== BUTTON STYLES ===== */
+    .cta-primary {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .cta-primary:hover {
+      background: #d62839;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(230, 57, 70, 0.3);
+    }
+
+    /* ===== SUCCESS MESSAGE ===== */
+    .success-message {
+      background: var(--success);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 6px;
+      text-align: center;
+      margin-top: 2rem;
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+      .container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+
+      .header h1 {
+        font-size: 2rem;
+      }
+    }
+
+    /* ===== BLOOD DROP ANIMATION ===== */
+    .blood-drop {
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <h1><span class="blood-drop">🩸</span> LifeSave Blood Bank</h1>
+    <p class="sub-heading">Join our mission to save lives. Every drop counts.</p>
+  </header>
+
+  <div class="container">
+    <section class="donation-form">
+      <!-- FORM SUBMIT.CO INTEGRATION -->
+      <form id="donation-form" method="POST">
+
+        <!-- HIDDEN FIELDS FOR FORM SUBMIT -->
+        <input type="hidden" name="_subject" value="New Blood Donor Registration">
+        <input type="hidden" name="_autoresponse" value="Dear donor, thank you for registering! We will contact you soon with donation details.">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
+
+        <!-- FORM FIELDS -->
+        <div class="form-group">
+          <label for="name"><i class="fas fa-user"></i> Full Name:</label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="age"><i class="fas fa-birthday-cake"></i> Age:</label>
+          <input type="number" id="age" name="age" min="18" max="65" placeholder="18 - 65" required>
+        </div>
+
+        <div class="form-group">
+          <label for="gender"><i class="fas fa-venus-mars"></i> Gender:</label>
+          <select id="gender" name="gender" required>
+            <option value="">--Select Gender--</option>
+            <option value="Male">♂ Male</option>
+            <option value="Female">♀ Female</option>
+            <option value="Other">⚧ Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="professional"><i class="fas fa-briefcase"></i> Profession:</label>
+          <select id="professional" name="professional" required>
+            <option value="">--Select Profession--</option>
+            <option value="Doctor">🩺 Doctor</option>
+            <option value="Nurse">💉 Nurse</option>
+            <option value="Student">🎓 Student</option>
+            <option value="Engineer">💻 Engineer</option>
+            <option value="Teacher">📚 Teacher</option>
+            <option value="Other">🔧 Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="blood-group"><i class="fas fa-tint"></i> Blood Group:</label>
+          <input type="text" id="blood-group" name="blood_group" placeholder="O+, A-, B+, etc." required>
+        </div>
+
+        <div class="form-group">
+          <label for="contact"><i class="fas fa-phone"></i> Contact Number:</label>
+          <input type="tel" id="contact" name="contact" placeholder="e.g., +91 9876543210" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Email Address:</label>
+          <input type="email" id="email" name="email" placeholder="example@mail.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="location"><i class="fas fa-map-marker-alt"></i> Location:</label>
+          <input type="text" id="location" name="location" placeholder="City or area">
+        </div>
+
+        <button type="submit" class="cta-primary">
+          <i class="fas fa-heartbeat"></i> Register as Donor
+        </button>
+      </form>
+
+      <!-- SUCCESS MESSAGE -->
+      <div id="success-message" class="success-message">
+        <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+        <h3>Thank You for Registering!</h3>
+        <p>Your contribution can save lives. We've sent a confirmation email to you.</p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault();
+      
+      // Show loading state
+      const submitBtn = event.target.querySelector('button[type="submit"]');
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+      submitBtn.disabled = true;
+
+      // Simulate form submission (FormSubmit.co handles the rest)
+      setTimeout(() => {
+        document.getElementById('donation-form').style.display = 'none';
+        document.getElementById('success-message').style.display = 'block';
+      }, 1500);
+    }
+
+    document.getElementById('donation-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+
+    const donorData = {
+      name: form.name.value,
+      age: form.age.value,
+      gender: form.gender.value,
+      professional: form.professional.value,
+      blood_group: form.blood_group.value,
+      contact: form.contact.value,
+      email: form.email.value,
+      location: form.location.value
+    };
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+    submitBtn.disabled = true;
+
+    try {
+      const response = await fetch('http://localhost:5000/api/donors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(donorData)
+      });
+
+      const result = await response.json();
+      console.log("✅ Response:", result);
+
+      if (response.ok) {
+        form.style.display = 'none';
+        document.getElementById('success-message').style.display = 'block';
+      } else {
+        alert("❌ Failed: " + result.error);
+      }
+    } catch (err) {
+      console.error("❌ Error:", err);
+      alert("Submission failed. Try again.");
+    }
+
+    submitBtn.innerHTML = '<i class="fas fa-heartbeat"></i> Register as Donor';
+    submitBtn.disabled = false;
+  });
+  </script>
+</body>
+</html>

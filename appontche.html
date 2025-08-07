@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hospital Booking Appointment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    .booking-widget { max-width: 700px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+    h1, h2 { text-align: center; }
+    .progress-bar { height: 10px; background-color: #eee; border-radius: 5px; margin-bottom: 20px; }
+    .progress { height: 10px; background-color: #4caf50; width: 0%; border-radius: 5px; transition: width 0.3s; }
+    .step-indicator { display: flex; justify-content: space-between; margin-bottom: 20px; }
+    .step { width: 30px; height: 30px; background-color: #ccc; border-radius: 50%; text-align: center; line-height: 30px; font-weight: bold; }
+    .step.active { background-color: #4caf50; color: white; }
+    .section { display: none; }
+    .section.active { display: block; }
+    input, select, textarea, button { display: block; width: 100%; margin: 10px 0; padding: 10px; }
+    .navigation-buttons { display: flex; justify-content: space-between; }
+    .time-slot { display: inline-block; padding: 10px 20px; margin: 5px; background-color: #f0f0f0; border: 1px solid #ccc; cursor: pointer; }
+    .time-slot.selected { background-color: #4caf50; color: white; }
+  </style>
+</head>
+<body>
+  <div class="booking-widget">
+    <h1><i class="fas fa-hospital"></i> Hospital Booking Appointment</h1>
+    
+    <div class="progress-bar"><div class="progress" id="progress"></div></div>
+    <div class="step-indicator">
+      <div class="step active" id="step1">1</div>
+      <div class="step" id="step2">2</div>
+      <div class="step" id="step3">3</div>
+      <div class="step" id="step4">4</div>
+      <div class="step" id="step5">5</div>
+    </div>
+
+    <!-- Step 1: Patient Details -->
+    <div class="section active" id="patient-section">
+      <h2><i class="fas fa-user-injured"></i> Patient Details</h2>
+      <form id="patient-form">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <input type="text" id="address" placeholder="Address" required>
+        <input type="number" id="age" placeholder="Age" required min="1" max="120">
+        <select id="gender" required>
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+          <option value="prefer-not-to-say">Prefer not to say</option>
+        </select>
+      </form>
+    </div>
+
+    <!-- Step 2: Appointment Date -->
+    <div class="section" id="date-section">
+      <h2><i class="fas fa-calendar-alt"></i> Appointment Date</h2>
+      <input type="text" id="appointment-date" placeholder="Enter appointment date manually (e.g. 2025-08-06)" required>
+    </div>
+
+    <!-- Step 3: Time Slot -->
+    <div class="section" id="time-section">
+      <h2><i class="fas fa-clock"></i> Select Time Slot</h2>
+      <div id="time-slots">
+        <button class="time-slot" data-time="09:00 AM">09:00 AM</button>
+        <button class="time-slot" data-time="10:00 AM">10:00 AM</button>
+        <button class="time-slot" data-time="11:00 AM">11:00 AM</button>
+        <button class="time-slot" data-time="12:00 PM">12:00 PM</button>
+        <button class="time-slot" data-time="02:00 PM">02:00 PM</button>
+        <button class="time-slot" data-time="03:00 PM">03:00 PM</button>
+        <button class="time-slot" data-time="04:00 PM">04:00 PM</button>
+        <button class="time-slot" data-time="05:00 PM">05:00 PM</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Condition -->
+    <div class="section" id="condition-section">
+      <h2><i class="fas fa-notes-medical"></i> Medical Condition</h2>
+      <textarea id="medical-condition" placeholder="Describe your condition" required></textarea>
+    </div>
+
+    <!-- Step 5: Confirmation -->
+    <div class="section" id="confirmation-section">
+      <h2><i class="fas fa-check-circle"></i> Confirm Details</h2>
+      <p><strong>Name:</strong> <span id="confirm-name"></span></p>
+      <p><strong>Email:</strong> <span id="confirm-email"></span></p>
+      <p><strong>Phone:</strong> <span id="confirm-phone"></span></p>
+      <p><strong>Date:</strong> <span id="confirm-date"></span></p>
+      <p><strong>Time:</strong> <span id="confirm-time"></span></p>
+      <p><strong>Condition:</strong> <span id="confirm-condition"></span></p>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="navigation-buttons">
+      <button id="prev-btn" disabled>Previous</button>
+      <button id="next-btn">Next</button>
+      <button id="submit-btn" style="display: none;">Submit</button>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 5;
+    let selectedTime = "";
+
+    const sections = document.querySelectorAll('.section');
+    const progress = document.getElementById('progress');
+    const stepIndicators = document.querySelectorAll('.step');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function showStep(step) {
+      sections.forEach((section, i) => {
+        section.classList.toggle('active', i === step - 1);
+        stepIndicators[i].classList.toggle('active', i === step - 1);
+      });
+      progress.style.width = `${(step - 1) / (totalSteps - 1) * 100}%`;
+      prevBtn.disabled = step === 1;
+      nextBtn.style.display = step < totalSteps ? 'block' : 'none';
+      submitBtn.style.display = step === totalSteps ? 'block' : 'none';
+
+      if (step === totalSteps) {
+        document.getElementById('confirm-name').textContent = document.getElementById('name').value;
+        document.getElementById('confirm-email').textContent = document.getElementById('email').value;
+        document.getElementById('confirm-phone').textContent = document.getElementById('phone').value;
+        document.getElementById('confirm-date').textContent = document.getElementById('appointment-date').value;
+        document.getElementById('confirm-time').textContent = selectedTime;
+        document.getElementById('confirm-condition').textContent = document.getElementById('medical-condition').value;
+      }
+    }
+
+    prevBtn.onclick = () => {
+      if (currentStep > 1) {
+        currentStep--;
+        showStep(currentStep);
+      }
+    };
+
+    nextBtn.onclick = () => {
+      if (currentStep < totalSteps) {
+        currentStep++;
+        showStep(currentStep);
+      }
+    };
+
+    submitBtn.onclick = () => {
+      const appointmentData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        age: document.getElementById('age').value,
+        gender: document.getElementById('gender').value,
+        appointmentDate: document.getElementById('appointment-date').value,
+        appointmentTime: selectedTime,
+        condition: document.getElementById('medical-condition').value
+      };
+
+      fetch('/api/appointments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(appointmentData)
+      })
+      .then(res => res.json())
+      .then(data => alert('✅ Appointment booked successfully!'))
+      .catch(err => alert('❌ Error booking appointment'));
+    };
+
+    document.querySelectorAll('.time-slot').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedTime = btn.getAttribute('data-time');
+      });
+    });
+
+    showStep(currentStep);
+  </script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescription - MediLong</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header .logo span {
+            color: #ffdd57;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffdd57;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 150px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .prescription-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            color: #333;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .prescription-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #007bff;
+        }
+
+        .prescription-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .prescription-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .prescription-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .prescription-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .prescription-card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .prescription-card .details {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .prescription-card .details span {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .prescription-card .medication-list {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+
+        .prescription-card .medication-list li {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        footer .social-links {
+            margin-top: 10px;
+        }
+
+        footer .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        footer .social-links a:hover {
+            color: #ffdd57;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .prescription-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">MediLong<span>Panimalar Medical Hospital</span></div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Prescriptions</h1>
+            <p>Manage and view your prescriptions with ease</p>
+        </section>
+
+        <section class="prescription-container">
+            <h2>Your Prescriptions</h2>
+            <div class="prescription-grid">
+                <!-- Prescription Card 1 -->
+                <div class="prescription-card">
+                    <h3>Prescription #12345</h3>
+                    <p>Issued by Dr. John Doe</p>
+                    <div class="details">
+                        <span><strong>Date:</strong> 2023-10-15</span>
+                        <span><strong>Patient:</strong> Manikandan</span>
+                        <span><strong>Diagnosis:</strong> High Blood Pressure</span>
+                    </div>
+                    <ul class="medication-list">
+                        <li>Medication A - 1 tablet daily</li>
+                        <li>Medication B - 2 tablets twice a day</li>
+                        <li>Medication C - 1 tablet before bed</li>
+                    </ul>
+                </div>
+
+                <!-- Prescription Card 2 -->
+                <div class="prescription-card">
+                    <h3>Prescription #67890</h3>
+                    <p>Issued by Dr. Jane Smith</p>
+                    <div class="details">
+                        <span><strong>Date:</strong> 2023-10-20</span>
+                        <span><strong>Patient:</strong> Sridhar</span>
+                        <span><strong>Diagnosis:</strong> Diabetes</span>
+                    </div>
+                    <ul class="medication-list">
+                        <li>Medication X - 1 tablet daily</li>
+                        <li>Medication Y - 1 tablet twice a day</li>
+                        <li>Medication Z - 1 tablet after meals</li>
+                    </ul>
+                </div>
+
+                <!-- Prescription Card 3 -->
+                <div class="prescription-card">
+                    <h3>Prescription #54321</h3>
+                    <p>Issued by Dr. Emily Brown</p>
+                    <div class="details">
+                        <span><strong>Date:</strong> 2023-10-25</span>
+                        <span><strong>Patient:</strong> Kamalesh</span>
+                        <span><strong>Diagnosis:</strong> Asthma</span>
+                    </div>
+                    <ul class="medication-list">
+                        <li>Medication P - 1 tablet daily</li>
+                        <li>Medication Q - 2 tablets twice a day</li>
+                        <li>Medication R - 1 tablet as needed</li>
+                    </ul>
+                </div>
+
+                <!-- Add more prescription cards as needed -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 MediLong. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+</body>
+</html>

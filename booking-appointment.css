@@ -1,0 +1,142 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, b1b4dd, ffd0fc);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.booking-widget {
+  max-width: 800px;
+  width: 100%;
+  margin: 20px;
+  padding: 30px;
+  background: rgba(213, 193, 226, 0.9);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #6a11cb;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #2575fc;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.section {
+  margin-bottom: 25px;
+}
+
+input, select, button {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus, button:focus {
+  border-color: #6a11cb;
+  box-shadow: 0 0 8px rgba(106, 17, 203, 0.3);
+}
+
+button {
+  background-color: #6a11cb;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: #2575fc;
+}
+
+.time-slot.selected,
+.seat.selected {
+  background-color: #007BFF;
+  color: white;
+  font-weight: bold;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.seat {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px;
+  background: #e0e0e0;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.seat.emergency {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+
+
+/* Emergency Seat Styling */
+.seat.emergency {
+  background-color: #ff6b6b; /* Red background for emergency seats */
+  color: white;
+  border: 1px solid #ff4757;
+}
+
+.seat.emergency.selected {
+  background-color: #ff4757; /* Darker red when selected */
+  border-color: #ff4757;
+}
+#time-slots .time-slot, #seats .seat {
+  display: inline-block;
+  padding: 10px 15px;
+  margin: 5px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#time-slots .time-slot.selected, #seats .seat.selected {
+  background-color: #6a11cb;
+  color: white;
+  border-color: #6a11cb;
+}
+
+#confirmation-details {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#confirmation-details p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+#confirm-booking {
+  background-color: #2575fc;
+  margin-top: 20px;
+}
+
+#confirm-booking:hover {
+  background-color: #6a11cb;
+}

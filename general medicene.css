@@ -1,0 +1,435 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(120deg, #edafce , #5fbed1 , #edafce 80%);
+    color: #fff;
+    overflow-x: hidden;
+  }
+  
+  /* Unique Background */
+  .background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(232, 121, 121, 0.278);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .logo-img {
+    height: 50px;
+    width: 50px;
+    margin-right: 7px;
+    border-radius: 50%;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin-left: 0;
+  }
+  
+  /* Navigation Bar */
+  .navbar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-links li {
+    position: relative;
+  }
+  
+  .nav-links li a {
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s, background 0.3s;
+  }
+  
+  .nav-links li a:hover {
+    color: #6a11cb;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+  }
+  
+  /* Department Overview */
+  .department-overview {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    border-radius: 15px;
+    margin: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .department-overview h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    animation: fadeIn 2s ease-in-out;
+  }
+  
+  .department-overview p {
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeIn 3s ease-in-out;
+  }
+  
+  /* Our Achievements Section */
+  .achievements {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: rgba(232, 121, 121, 0.278);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    margin: 2rem;
+  }
+  
+  .achievements h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #6a11cb;
+  }
+  
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .achievement-card {
+    background: rgba(229, 103, 103, 0.278);
+    padding: 1.5rem;
+    border-radius: 10px;
+    transition: transform 0.3s, background 0.3s;
+  }
+  
+  .achievement-card:hover {
+    transform: translateY(-10px);
+    background: rgba(232, 121, 121, 0.625);
+  }
+  
+  .achievement-card span {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #6a11cb;
+  }
+  
+  .achievement-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .achievement-card p {
+    font-size: 1rem;
+    color: #ffffff;
+  }
+  
+  /* Our Doctors Section */
+  .doctors {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: rgba(232, 121, 121, 0.278);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    margin: 2rem;
+  }
+  
+  .doctors h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #6a11cb;
+  }
+  
+  .doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .doctor-card {
+    background: rgba(229, 103, 103, 0.278);
+    padding: 1.5rem;
+    border-radius: 10px;
+    transition: transform 0.3s, background 0.3s;
+  }
+  
+  .doctor-card:hover {
+    transform: translateY(-10px);
+    background: rgba(232, 121, 121, 0.625);
+  }
+  
+  .doctor-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .doctor-card p {
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+  }
+  
+  .book-appointment {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  
+  .book-appointment:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Our Facilities Section */
+.facilities {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: #fff;
+    border-radius: 15px;
+    margin: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .facilities h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .facilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .facility-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    transition: transform 0.3s, background 0.3s;
+  }
+  
+  .facility-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .facility-card span {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .facility-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .facility-card p {
+    font-size: 1rem;
+    color: #ccc;
+  }
+  /* What Our Patients Say Section */
+  .testimonials {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    color: #fff;
+    border-radius: 15px;
+    margin: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .testimonials h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .testimonial-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    transition: transform 0.3s, background 0.3s;
+  }
+  
+  .testimonial-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .testimonial-card p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .testimonial-card p:last-child {
+    font-weight: bold;
+    color: #6a11cb;
+  }
+  
+  /* Health Tips Section */
+  .health-tips {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: rgba(232, 121, 121, 0.278);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    margin: 2rem;
+  }
+  
+  .health-tips h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #6a11cb;
+  }
+  
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .tip-card {
+    background: rgba(232, 121, 121, 0.278);
+    padding: 1.5rem;
+    border-radius: 10px;
+    transition: transform 0.3s, background 0.3s;
+  }
+  
+  .tip-card:hover {
+    transform: translateY(-10px);
+    background: rgba(232, 121, 121, 0.625);
+  }
+  
+  .tip-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tip-card p {
+    font-size: 1rem;
+    color: #ffffff;
+  }
+  
+  /* Contact Us Section */
+  .contact {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: rgba(232, 121, 121, 0.278);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    margin: 2rem;
+  }
+  
+  .contact h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #6a11cb;
+  }
+  
+  .contact-info {
+    background: rgba(232, 121, 121, 0.625);
+    padding: 1.5rem;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .contact-info p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+  
+  .contact-info p span {
+    font-weight: bold;
+    color: #6a11cb;
+  }
+  
+  /* Footer */
+  .footer {
+    background: rgba(232, 121, 121, 0.278);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 4rem;
+  }
+  
+  .footer-links {
+    margin-bottom: 1rem;
+  }
+  
+  .footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 1rem;
+  }
+  
+  .social-media a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 1rem;
+  }
+  
+  .made-by {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }

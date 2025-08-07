@@ -1,0 +1,1990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediLong- Medical Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles & Variables */
+        :root {
+            --primary: #3f51b5;
+            --primary-dark: #303f9f;
+            --primary-light: #c5cae9;
+            --secondary: #ff4081;
+            --secondary-dark: #f50057;
+            --accent: #00bcd4;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --light: #f5f5f5;
+            --dark: #212121;
+            --gray: #757575;
+            --gray-light: #e0e0e0;
+            --white: #ffffff;
+            --black: #000000;
+            
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1), 0 5px 10px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.15), 0 10px 10px rgba(0,0,0,0.05);
+            
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 16px;
+            
+            --transition-fast: 0.15s ease-in-out;
+            --transition-normal: 0.3s ease-in-out;
+            --transition-slow: 0.5s ease-in-out;
+            
+            --font-sans: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            --font-mono: 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', monospace;
+            
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            --gradient-danger: linear-gradient(135deg, var(--danger) 0%, var(--warning) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        .logo-img {
+            height: 75px;
+            width: 75px;
+            margin-right: 7px;
+            border-radius: 50%;
+            }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.75rem; }
+        h4 { font-size: 1.5rem; }
+        h5 { font-size: 1.25rem; }
+        h6 { font-size: 1rem; }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Layout Utilities */
+        .flex {
+            display: flex;
+        }
+
+        .grid {
+            display: grid;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: var(--white);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .logo i {
+            margin-right: 0.75rem;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .blockchain-verification {
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem;
+            margin-left: 1.5rem;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--primary-light);
+            border-radius: var(--border-radius-lg);
+            color: var(--primary-dark);
+        }
+
+        .blockchain-verification i {
+            margin-right: 0.25rem;
+            font-size: 0.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Enhanced Navigation Styles */
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            color: var(--gray);
+            transition: all var(--transition-fast);
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius-md);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(63, 81, 181, 0.1);
+        }
+
+        .nav-link.active {
+            color: var(--primary);
+            background-color: rgba(63, 81, 181, 0.1);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .dropdown-arrow {
+            font-size: 0.7rem;
+            margin-left: 0.25rem;
+            transition: transform var(--transition-fast);
+        }
+
+        .dropdown-container:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Dropdown Menus */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 300px;
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-xl);
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all var(--transition-fast);
+            z-index: 1000;
+            border: 1px solid var(--gray-light);
+        }
+
+        .dropdown-container:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .wide-menu {
+            width: 600px;
+        }
+
+        .mega-menu {
+            width: 800px;
+            left: 50%;
+            transform: translate(-50%, 10px);
+        }
+
+        .dropdown-container:hover .mega-menu {
+            transform: translate(-50%, 0);
+        }
+
+        .mega-menu-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 10px;
+            padding: 0 0.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .badge-danger {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+
+        /* Dashboard Mega Menu */
+        .quick-stats h4, 
+        .reports-filter h4,
+        .recent-reports h4,
+        .analytics-chart-container h4,
+        .notification-header h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-stats h4 i,
+        .reports-filter h4 i,
+        .recent-reports h4 i,
+        .analytics-chart-container h4 i,
+        .notification-header h4 i {
+            color: var(--primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background-color: var(--light);
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-fast);
+        }
+
+        .stat-item:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-item i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .stat-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .quick-action {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: var(--border-radius-md);
+            color: var(--dark);
+            transition: all var(--transition-fast);
+        }
+
+        .quick-action:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            padding-left: 1rem;
+        }
+
+        .quick-action i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Reports Dropdown */
+        .filter-options {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-option {
+            padding: 0.5rem 0.75rem;
+            background-color: var(--light);
+            border-radius: var(--border-radius-md);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-option:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .filter-option.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .report-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .report-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem;
+            border-radius: var(--border-radius-md);
+            background-color: var(--light);
+            transition: all var(--transition-fast);
+        }
+
+        .report-item:hover {
+            background-color: var(--primary-light);
+            transform: translateX(3px);
+        }
+
+        .report-item.critical {
+            border-left: 3px solid var(--danger);
+        }
+
+        .report-meta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .report-patient {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .report-date {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .report-type {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .report-item i {
+            color: var(--gray);
+        }
+
+        .view-all {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+
+        /* Analytics Dropdown */
+        .analytics-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .analytics-chart-container {
+            padding: 1rem;
+            background-color: var(--light);
+            border-radius: var(--border-radius-md);
+        }
+
+        .mini-chart {
+            height: 100px;
+            width: 100%;
+            background-color: var(--white);
+            border-radius: var(--border-radius-sm);
+        }
+
+        .analytics-quick-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .analytics-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: var(--border-radius-md);
+            background-color: var(--light);
+            color: var(--dark);
+            font-size: 0.85rem;
+            transition: all var(--transition-fast);
+        }
+
+        .analytics-link:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .analytics-link i {
+            font-size: 1rem;
+        }
+
+        /* Notification Center */
+        .notification-center {
+            width: 350px;
+            padding: 0;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .notification-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .mark-all-read {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .notification-settings {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .notification-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-light);
+            transition: all var(--transition-fast);
+        }
+
+        .notification-item:hover {
+            background-color: var(--light);
+        }
+
+        .notification-item.unread {
+            background-color: rgba(63, 81, 181, 0.05);
+        }
+
+        .notification-item.critical {
+            border-left: 3px solid var(--danger);
+        }
+
+        .notification-icon {
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .notification-item.critical .notification-icon {
+            color: var(--danger);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .notification-message {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .notification-time {
+            font-size: 0.75rem;
+            color: var(--gray);
+        }
+
+        .notification-footer {
+            padding: 1rem;
+            text-align: center;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .notification-footer a {
+            font-size: 0.85rem;
+        }
+
+        /* User Profile */
+        .user-profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--border-radius-lg);
+            transition: all var(--transition-fast);
+        }
+
+        .user-profile:hover {
+            background-color: var(--primary-light);
+        }
+
+        .user-profile img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 200px;
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--shadow-lg);
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all var(--transition-fast);
+            z-index: 100;
+        }
+
+        .user-profile:hover .dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--gray);
+            transition: all var(--transition-fast);
+        }
+
+        .dropdown a:hover {
+            color: var(--primary);
+            background-color: var(--primary-light);
+        }
+
+        .dropdown a i {
+            margin-right: 0.5rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Voice Command Interface */
+        .voice-control {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 999;
+        }
+
+        .voice-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius-xl);
+            box-shadow: var(--shadow-lg);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .voice-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .voice-btn:active {
+            transform: translateY(1px);
+        }
+
+        .voice-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(255,255,255,0.3), transparent);
+            pointer-events: none;
+        }
+
+        .voice-btn i {
+            font-size: 1.25rem;
+        }
+
+        .voice-btn.listening {
+            animation: pulse 1.5s infinite;
+            background: var(--gradient-danger);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(244, 67, 54, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(244, 67, 54, 0);
+            }
+        }
+
+        /* Alert Styles */
+        .alert {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            max-width: 400px;
+            box-shadow: var(--shadow-lg);
+            z-index: 1100;
+            transform: translateX(120%);
+            transition: transform var(--transition-normal);
+        }
+
+        .alert.show {
+            transform: translateX(0);
+        }
+
+        .alert-danger {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+
+        .alert i {
+            font-size: 1.25rem;
+        }
+
+        /* Dashboard Grid */
+        .ai-dashboard {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .ai-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+            border-top: 4px solid var(--primary);
+        }
+
+        .ai-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .ai-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .ai-card h3 i {
+            font-size: 1.5rem;
+        }
+
+        /* Advanced Filters */
+        .advanced-filters {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .advanced-filters h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .advanced-filters h2 i {
+            font-size: 1.5rem;
+        }
+
+        .filter-row {
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-group {
+            flex: 1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius-md);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+            background-color: var(--white);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.2);
+        }
+
+        .form-control::placeholder {
+            color: var(--gray-light);
+        }
+
+        select.form-control[multiple] {
+            height: auto;
+            min-height: 120px;
+            padding: 0.5rem;
+        }
+
+        select.form-control[multiple] option {
+            padding: 0.5rem;
+            border-radius: var(--border-radius-sm);
+        }
+
+        select.form-control[multiple] option:hover {
+            background-color: var(--primary-light);
+        }
+
+        .invalid-feedback {
+            display: none;
+            color: var(--danger);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .is-invalid + .invalid-feedback {
+            display: block;
+        }
+
+        .is-invalid {
+            border-color: var(--danger);
+        }
+
+        .is-invalid:focus {
+            box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.2);
+        }
+
+        .filter-actions {
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+        }
+
+        .btn i {
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background-color: var(--gray-light);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--gray);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Loading State */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            gap: 1rem;
+            color: var(--gray);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--primary-light);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Reports Grid */
+        .reports-grid {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .report-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-normal);
+            position: relative;
+        }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .report-card-header {
+            padding: 1rem 1.5rem;
+            background-color: var(--primary);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .report-card-header h4 {
+            margin-bottom: 0;
+            color: var(--white);
+        }
+
+        .report-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background-color: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--border-radius-sm);
+        }
+
+        .report-card-body {
+            padding: 1.5rem;
+        }
+
+        .report-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .report-summary {
+            margin-bottom: 1.5rem;
+            font-size: 0.9375rem;
+        }
+
+        .report-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .report-actions .btn {
+            flex: 1;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .report-critical {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 30px;
+            height: 30px;
+            background-color: var(--danger);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            z-index: 1;
+        }
+
+        /* Health Trends */
+        .health-trends {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .health-trends h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .health-trends h2 i {
+            font-size: 1.5rem;
+        }
+
+        #healthTrendsChart {
+            height: 400px;
+            width: 100%;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            transform: translateY(20px);
+            transition: all var(--transition-normal);
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--gray);
+            cursor: pointer;
+            transition: color var(--transition-fast);
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: calc(90vh - 120px);
+        }
+
+        /* Report Detail Modal */
+        .report-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .report-detail-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .report-detail-title h3 {
+            margin-bottom: 0;
+        }
+
+        .report-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--border-radius-lg);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-normal {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: var(--success);
+        }
+
+        .status-critical {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: var(--danger);
+            animation: pulse 2s infinite;
+        }
+
+        .report-detail-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .report-meta-item {
+            background-color: var(--light);
+            padding: 1rem;
+            border-radius: var(--border-radius-md);
+        }
+
+        .report-meta-item h4 {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .report-meta-item p {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0;
+        }
+
+        .report-detail-content {
+            margin-bottom: 1.5rem;
+        }
+
+        .report-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .report-section h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary-dark);
+        }
+
+        .report-section h4 i {
+            font-size: 1.1rem;
+        }
+
+        .report-section p {
+            padding-left: 1.75rem;
+        }
+
+        .report-ai-analysis {
+            background-color: rgba(0, 188, 212, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 1rem;
+            border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+            margin: 1.5rem 0;
+        }
+
+        .report-ai-analysis h5 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .report-actions-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        /* AI Assistant Modal */
+        #aiConversation {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background-color: var(--light);
+            border-radius: var(--border-radius-md);
+        }
+
+        .ai-message {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: var(--border-radius-md);
+            max-width: 80%;
+        }
+
+        .ai-message.user {
+            background-color: var(--primary-light);
+            margin-left: auto;
+            border-bottom-right-radius: 0;
+        }
+
+        .ai-message.bot {
+            background-color: var(--white);
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ai-message .timestamp {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+            text-align: right;
+        }
+
+        .ai-input {
+            display: flex;
+        }
+
+        .ai-input input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius-md);
+            font-size: 1rem;
+        }
+
+        .ai-input button {
+            width: 50px;
+            padding: 0;
+            border-radius: var(--border-radius-md);
+        }
+
+        /* Animations */
+        .animate-fadeIn {
+            animation: fadeIn var(--transition-normal) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .mega-menu {
+                width: 700px;
+            }
+            
+            .wide-menu {
+                width: 500px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 1rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .nav-links {
+                width: 100%;
+                margin-top: 1rem;
+                flex-wrap: wrap;
+            }
+            
+            .user-profile {
+                margin-left: auto;
+            }
+            
+            .dropdown-menu {
+                position: fixed;
+                top: auto !important;
+                left: 0 !important;
+                right: 0;
+                bottom: 0;
+                width: 100% !important;
+                height: 60vh;
+                border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+                transform: translateY(100%) !important;
+            }
+            
+            .dropdown-container:hover .dropdown-menu {
+                transform: translateY(0) !important;
+            }
+            
+            .mega-menu-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .ai-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .report-detail-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .analytics-quick-links {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .report-actions {
+                flex-direction: column;
+            }
+            
+            .report-actions .btn {
+                width: 100%;
+            }
+            
+            .voice-btn .voice-feedback {
+                display: none;
+            }
+            
+            .voice-btn {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                padding: 0;
+            }
+            
+            .voice-btn i {
+                margin-right: 0;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-light);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- Voice Command Interface -->
+    <div class="voice-control">
+        <button class="voice-btn" id="voiceBtn">
+            <i class="fas fa-microphone"></i>
+            <span class="voice-feedback">Voice Commands</span>
+        </button>
+    </div>
+
+    <!-- Error Alert Container -->
+    <div id="errorAlert" class="alert alert-danger" style="display: none;">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="errorMessage"></span>
+    </div>
+
+    <!-- Header with Enhanced Navigation -->
+    <header class="navbar">
+        <div class="logo">
+            <img class="logo-img" src="medilonglogo1.jpg" >
+            MediLong
+            <div class="blockchain-verification">
+                <i class="fas fa-link"></i>
+                <span>Blockchain Secured</span>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <!-- Dashboard with Quick Stats -->
+            <div class="nav-item dropdown-container">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-home"></i> Dashboard
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </a>
+                <div class="dropdown-menu mega-menu">
+                    <div class="mega-menu-content">
+                        <div class="quick-stats">
+                            <h4><i class="fas fa-chart-bar"></i> Quick Stats</h4>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <i class="fas fa-procedures"></i>
+                                    <div>
+                                        <span class="stat-value">24</span>
+                                        <span class="stat-label">New Patients</span>
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-file-medical"></i>
+                                    <div>
+                                        <span class="stat-value">56</span>
+                                        <span class="stat-label">Pending Reports</span>
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-bell"></i>
+                                    <div>
+                                        <span class="stat-value">3</span>
+                                        <span class="stat-label">Critical Alerts</span>
+                                    </div>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-calendar-check"></i>
+                                    <div>
+                                        <span class="stat-value">12</span>
+                                        <span class="stat-label">Today's Appointments</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quick-actions">
+                            <h4><i class="fas fa-bolt"></i> Quick Actions</h4>
+                            <a href="#" class="quick-action">
+                                <i class="fas fa-plus-circle"></i> Add New Patient
+                            </a>
+                            <a href="#" class="quick-action">
+                                <i class="fas fa-file-import"></i> Import Reports
+                            </a>
+                            <a href="#" class="quick-action">
+                                <i class="fas fa-chart-pie"></i> Generate Analytics
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports with Filter Options -->
+            <div class="nav-item dropdown-container">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-file-medical"></i> Reports
+                    <span class="badge badge-danger">12</span>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <div class="reports-filter">
+                        <h4><i class="fas fa-filter"></i> Filter Reports</h4>
+                        <div class="filter-options">
+                            <div class="filter-option active" data-filter="all">All Reports</div>
+                            <div class="filter-option" data-filter="pending">Pending</div>
+                            <div class="filter-option" data-filter="completed">Completed</div>
+                            <div class="filter-option" data-filter="critical">Critical</div>
+                        </div>
+                    </div>
+                    <div class="recent-reports">
+                        <h4><i class="fas fa-history"></i> Recent Reports</h4>
+                        <div class="report-list">
+                            <a href="#" class="report-item critical">
+                                <div class="report-meta">
+                                    <span class="report-patient">John D.</span>
+                                    <span class="report-date">Today</span>
+                                </div>
+                                <span class="report-type">Blood Test</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" class="report-item">
+                                <div class="report-meta">
+                                    <span class="report-patient">Sarah M.</span>
+                                    <span class="report-date">Yesterday</span>
+                                </div>
+                                <span class="report-type">MRI Scan</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" class="report-item">
+                                <div class="report-meta">
+                                    <span class="report-patient">Robert P.</span>
+                                    <span class="report-date">2 days ago</span>
+                                </div>
+                                <span class="report-type">ECG</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <a href="#" class="view-all">View All Reports <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics with Mini Charts -->
+            <div class="nav-item dropdown-container">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-line"></i> Analytics
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </a>
+                <div class="dropdown-menu wide-menu">
+                    <div class="analytics-preview">
+                        <div class="analytics-chart-container">
+                            <h4><i class="fas fa-user-injured"></i> Patient Visits</h4>
+                            <div class="mini-chart" id="miniChartVisits"></div>
+                        </div>
+                        <div class="analytics-chart-container">
+                            <h4><i class="fas fa-vial"></i> Test Types</h4>
+                            <div class="mini-chart" id="miniChartTests"></div>
+                        </div>
+                        <div class="analytics-chart-container">
+                            <h4><i class="fas fa-diagnoses"></i> Diagnosis Stats</h4>
+                            <div class="mini-chart" id="miniChartDiagnosis"></div>
+                        </div>
+                    </div>
+                    <div class="analytics-quick-links">
+                        <a href="#" class="analytics-link">
+                            <i class="fas fa-user-injured"></i> Patient Analytics
+                        </a>
+                        <a href="#" class="analytics-link">
+                            <i class="fas fa-vial"></i> Lab Performance
+                        </a>
+                        <a href="#" class="analytics-link">
+                            <i class="fas fa-money-bill-wave"></i> Financial Reports
+                        </a>
+                        <a href="#" class="analytics-link">
+                            <i class="fas fa-clock"></i> Operational Efficiency
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerts with Notification Center -->
+            <div class="nav-item dropdown-container">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-bell"></i> Alerts
+                    <span class="badge badge-danger">5</span>
+                    <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </a>
+                <div class="dropdown-menu notification-center">
+                    <div class="notification-header">
+                        <h4><i class="fas fa-bell"></i> Notifications</h4>
+                        <div class="notification-actions">
+                            <button class="mark-all-read">Mark all as read</button>
+                            <button class="notification-settings"><i class="fas fa-cog"></i></button>
+                        </div>
+                    </div>
+                    <div class="notification-list">
+                        <div class="notification-item unread critical">
+                            <div class="notification-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-title">Critical Lab Result</div>
+                                <div class="notification-message">Patient #34567 has critical hemoglobin levels</div>
+                                <div class="notification-time">2 minutes ago</div>
+                            </div>
+                        </div>
+                        <div class="notification-item unread">
+                            <div class="notification-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-title">New Appointment</div>
+                                <div class="notification-message">Dr. Sharma added a new appointment for tomorrow</div>
+                                <div class="notification-time">15 minutes ago</div>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-icon">
+                                <i class="fas fa-file-medical"></i>
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-title">Report Ready</div>
+                                <div class="notification-message">MRI scan results for Patient #23456 are available</div>
+                                <div class="notification-time">1 hour ago</div>
+                            </div>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-icon">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-title">Doctor Message</div>
+                                <div class="notification-message">Dr. Kumar sent you a message about Patient #12345</div>
+                                <div class="notification-time">3 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notification-footer">
+                        <a href="#">View All Notifications</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Profile -->
+            <div class="user-profile">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+                <span>Dr. Manikandan</span>
+                <div class="dropdown">
+                    <a href="#"><i class="fas fa-user"></i> Profile</a>
+                    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- AI Health Dashboard -->
+        <section class="ai-dashboard grid">
+            <div class="ai-card animate-fadeIn">
+                <h3><i class="fas fa-brain"></i> Health Insights</h3>
+                <div id="healthInsightsChart"></div>
+            </div>
+            <div class="ai-card animate-fadeIn delay-1">
+                <h3><i class="fas fa-bell"></i> Critical Alerts</h3>
+                <div id="alertsChart"></div>
+            </div>
+            <div class="ai-card animate-fadeIn delay-2">
+                <h3><i class="fas fa-procedures"></i> Treatment Plan</h3>
+                <div id="treatmentPlan"></div>
+            </div>
+        </section>
+
+        <!-- Advanced Filter System -->
+        <section class="advanced-filters animate-fadeIn">
+            <h2><i class="fas fa-filter"></i> Advanced Filters</h2>
+            <div class="filter-row flex">
+                <div class="filter-group form-group">
+                    <label for="reportType" class="form-label">Report Type</label>
+                    <select id="reportType" class="form-control" multiple>
+                        <option value="blood">Blood Tests</option>
+                        <option value="imaging">Imaging</option>
+                        <option value="ecg">ECG</option>
+                        <option value="genetic">Genetic</option>
+                    </select>
+                    <div class="invalid-feedback">Please select at least one report type</div>
+                </div>
+                <div class="filter-group form-group">
+                    <label for="dateRange" class="form-label">Date Range</label>
+                    <input type="text" id="dateRange" class="form-control" placeholder="Select date range">
+                    <div class="invalid-feedback">Please select a valid date range</div>
+                </div>
+            </div>
+            <div class="filter-row flex">
+                <div class="filter-group form-group">
+                    <label for="patientSearch" class="form-label">Patient Search</label>
+                    <input type="text" id="patientSearch" class="form-control" placeholder="Search patients...">
+                </div>
+                <div class="filter-group form-group">
+                    <label for="doctorFilter" class="form-label">Ordering Doctor</label>
+                    <select id="doctorFilter" class="form-control">
+                        <option value="">All Doctors</option>
+                        <option value="sharma">Dr. Sharma</option>
+                        <option value="kumar">Dr. Kumar</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions flex">
+                <button class="btn btn-secondary" id="resetFilters">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+                <button class="btn btn-primary" id="applyFilters">
+                    <i class="fas fa-filter"></i> Apply Filters
+                </button>
+            </div>
+        </section>
+
+        <!-- Loading State -->
+        <div id="loadingReports" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <span>Loading reports...</span>
+        </div>
+
+        <!-- AI-Powered Reports Grid -->
+        <section class="reports-grid grid" id="reportsGrid">
+            <!-- Reports will be loaded dynamically -->
+            <div class="report-card">
+                <div class="report-card-header">
+                    <h4>Patient Report</h4>
+                    <span class="report-type">Blood Test</span>
+                </div>
+                <div class="report-card-body">
+                    <div class="report-meta">
+                        <span>Patient: John Doe</span>
+                        <span>Date: 2023-06-15</span>
+                    </div>
+                    <div class="report-summary">
+                        Complete blood count results showing elevated white blood cells...
+                    </div>
+                    <div class="report-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+                <div class="report-critical">
+                    <i class="fas fa-exclamation"></i>
+                </div>
+            </div>
+            
+            <div class="report-card">
+                <div class="report-card-header">
+                    <h4>Patient Report</h4>
+                    <span class="report-type">MRI Scan</span>
+                </div>
+                <div class="report-card-body">
+                    <div class="report-meta">
+                        <span>Patient: Sarah Smith</span>
+                        <span>Date: 2023-06-14</span>
+                    </div>
+                    <div class="report-summary">
+                        Brain MRI showing normal structures with no evidence of acute pathology...
+                    </div>
+                    <div class="report-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="report-card">
+                <div class="report-card-header">
+                    <h4>Patient Report</h4>
+                    <span class="report-type">ECG</span>
+                </div>
+                <div class="report-card-body">
+                    <div class="report-meta">
+                        <span>Patient: Robert Johnson</span>
+                        <span>Date: 2023-06-13</span>
+                    </div>
+                    <div class="report-summary">
+                        12-lead ECG showing normal sinus rhythm with occasional PVCs...
+                    </div>
+                    <div class="report-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Health Trends Visualization -->
+        <section class="health-trends animate-fadeIn">
+            <h2><i class="fas fa-chart-line"></i> Health Trends Analysis</h2>
+            <div id="healthTrendsChart"></div>
+        </section>
+    </main>
+
+    <!-- Report Detail Modal -->
+    <div class="modal" id="reportModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be loaded dynamically -->
+                <div class="report-detail-header">
+                    <div class="report-detail-title">
+                        <h3>Blood Test Report</h3>
+                        <span class="report-status status-critical">Critical</span>
+                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+                
+                <div class="report-detail-meta">
+                    <div class="report-meta-item">
+                        <h4>Patient</h4>
+                        <p>John Doe (ID: #34567)</p>
+                    </div>
+                    <div class="report-meta-item">
+                        <h4>Date Collected</h4>
+                        <p>June 15, 2023 09:30 AM</p>
+                    </div>
+                    <div class="report-meta-item">
+                        <h4>Ordering Physician</h4>
+                        <p>Dr. Sharma</p>
+                    </div>
+                    <div class="report-meta-item">
+                        <h4>Lab</h4>
+                        <p>Central Diagnostics</p>
+                    </div>
+                </div>
+                
+                <div class="report-detail-content">
+                    <div class="report-section">
+                        <h4><i class="fas fa-tint"></i> Hematology Results</h4>
+                        <p>Complete blood count showing significantly elevated white blood cells (WBC: 18.5 x10³/μL) with neutrophilia. Hemoglobin levels critically low at 6.2 g/dL.</p>
+                    </div>
+                    
+                    <div class="report-section">
+                        <h4><i class="fas fa-microscope"></i> Chemistry Panel</h4>
+                        <p>Elevated creatinine (2.1 mg/dL) suggesting possible renal impairment. Liver function tests within normal limits.</p>
+                    </div>
+                    
+                    <div class="report-ai-analysis">
+                        <h5><i class="fas fa-robot"></i> AI Analysis</h5>
+                        <p>The pattern of anemia with elevated WBC and renal impairment suggests possible acute infection with underlying chronic disease. Recommend immediate hematology consultation and consider blood transfusion for hemoglobin <7 g/dL. Urgent follow-up required.</p>
+                    </div>
+                </div>
+                
+                <div class="report-actions-footer">
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-edit"></i> Add Note
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-share-alt"></i> Share with Patient
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Assistant Modal -->
+    <div class="modal" id="aiAssistant">
+        <div class="modal-content" style="max-width: 600px;">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <h3><i class="fas fa-robot"></i> AI Medical Assistant</h3>
+                <div id="aiConversation">
+                    <div class="ai-message bot">
+                        <p>Hello Dr. Manikandan, I'm your AI medical assistant. How can I help you with your reports today?</p>
+                        <div class="timestamp">Today, 10:15 AM</div>
+                    </div>
+                </div>
+                <div class="ai-input flex" style="gap: 0.5rem; margin-top: 1rem;">
+                    <input type="text" class="form-control" placeholder="Ask about your reports...">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle dropdowns on click for mobile
+            const dropdownContainers = document.querySelectorAll('.dropdown-container');
+            
+            dropdownContainers.forEach(container => {
+                const link = container.querySelector('.nav-link');
+                const menu = container.querySelector('.dropdown-menu');
+                
+                link.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 992) {
+                        e.preventDefault();
+                        const isOpen = menu.style.transform === 'translateY(0px)' || 
+                                      menu.style.transform === 'translate(-50%, 0px)';
+                        
+                        // Close all other dropdowns
+                        document.querySelectorAll('.dropdown-menu').forEach(otherMenu => {
+                            if (otherMenu !== menu) {
+                                otherMenu.style.transform = window.innerWidth > 992 ? 
+                                    'translateY(10px)' : 'translateY(100%)';
+                                otherMenu.style.opacity = '0';
+                                otherMenu.style.visibility = 'hidden';
+                            }
+                        });
+                        
+                        if (isOpen) {
+                            menu.style.transform = window.innerWidth > 992 ? 
+                                'translateY(10px)' : 'translateY(100%)';
+                            menu.style.opacity = '0';
+                            menu.style.visibility = 'hidden';
+                        } else {
+                            menu.style.transform = window.innerWidth > 992 ? 
+                                'translateY(0)' : 'translateY(0)';
+                            if (menu.classList.contains('mega-menu')) {
+                                menu.style.t

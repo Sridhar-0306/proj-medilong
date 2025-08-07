@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers - MediLong</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header .logo span {
+            color: #ffdd57;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffdd57;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 150px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .careers-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            color: #333;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .careers-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #007bff;
+        }
+
+        .careers-section {
+            margin-bottom: 40px;
+        }
+
+        .careers-section h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+
+        .careers-section p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .careers-section ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .careers-section ul li {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .job-openings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .job-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .job-card h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .job-card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .job-card .details {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .job-card .details span {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .job-card .apply-button {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .job-card .apply-button a {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .job-card .apply-button a:hover {
+            background: #0056b3;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        footer .social-links {
+            margin-top: 10px;
+        }
+
+        footer .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        footer .social-links a:hover {
+            color: #ffdd57;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .careers-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">MediLong<span>  Panimalar Medical Hospital</span></div>
+
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Careers at MediLong</h1>
+            <p>Join our team and make a difference in healthcare.</p>
+        </section>
+
+        <section class="careers-container">
+            <h2>Why Work With Us?</h2>
+
+            <!-- Section 1: Benefits -->
+            <div class="careers-section">
+                <h3>Our Benefits</h3>
+                <p>
+                    At MediLong, we value our employees and offer a range of benefits to support their well-being and 
+                    professional growth. These include:
+                </p>
+                <ul>
+                    <li>Competitive salaries and performance bonuses.</li>
+                    <li>Comprehensive health insurance plans.</li>
+                    <li>Opportunities for professional development and training.</li>
+                    <li>A supportive and inclusive work environment.</li>
+                    <li>Work-life balance with flexible working hours.</li>
+                </ul>
+            </div>
+
+            <!-- Section 2: Job Openings -->
+            <div class="careers-section">
+                <h3>Current Job Openings</h3>
+                <p>
+                    Explore our current job openings and find a role that matches your skills and passion. 
+                    Click on the job title to learn more and apply.
+                </p>
+                <div class="job-openings">
+                    <!-- Job Card 1 -->
+                    <div class="job-card">
+                        <h4>Medical Doctor</h4>
+                        <p>We are looking for experienced medical doctors to join our team.</p>
+                        <div class="details">
+                            <span><strong>Location:</strong> Chennai, Tamil Nadu</span>
+                            <span><strong>Type:</strong> Full-Time</span>
+                            <span><strong>Experience:</strong> 3+ years</span>
+                        </div>
+                        <div class="apply-button">
+                            <a href="#">Apply Now</a>
+                        </div>
+                    </div>
+
+                    <!-- Job Card 2 -->
+                    <div class="job-card">
+                        <h4>Nurse</h4>
+                        <p>Join our nursing team and provide compassionate care to our patients.</p>
+                        <div class="details">
+                            <span><strong>Location:</strong> Chennai, Tamil Nadu</span>
+                            <span><strong>Type:</strong> Full-Time</span>
+                            <span><strong>Experience:</strong> 2+ years</span>
+                        </div>
+                        <div class="apply-button">
+                            <a href="#">Apply Now</a>
+                        </div>
+                    </div>
+
+                    <!-- Job Card 3 -->
+                    <div class="job-card">
+                        <h4>Administrative Assistant</h4>
+                        <p>We are hiring an administrative assistant to support our operations.</p>
+                        <div class="details">
+                            <span><strong>Location:</strong> Chennai, Tamil Nadu</span>
+                            <span><strong>Type:</strong> Full-Time</span>
+                            <span><strong>Experience:</strong> 1+ years</span>
+                        </div>
+                        <div class="apply-button">
+                            <a href="#">Apply Now</a>
+                        </div>
+                    </div>
+
+                    <!-- Add more job cards as needed -->
+                </div>
+            </div>
+
+            <!-- Section 3: How to Apply -->
+            <div class="careers-section">
+                <h3>How to Apply</h3>
+                <p>
+                    To apply for a position at MediLong, please follow these steps:
+                </p>
+                <ol>
+                    <li>Browse our current job openings above.</li>
+                    <li>Click on the "Apply Now" button for the job you're interested in.</li>
+                    <li>Fill out the application form and upload your resume.</li>
+                    <li>Submit your application and wait for our team to contact you.</li>
+                </ol>
+            </div>
+
+            <!-- Section 4: Contact Us -->
+            <div class="careers-section">
+                <h3>Contact Us</h3>
+                <p>
+                    If you have any questions about our job openings or the application process, please contact us at:
+                </p>
+                <ul>
+                    <li><strong>Email:</strong> careers@medilong.com</li>
+                    <li><strong>Phone:</strong> +91 12345 67890</li>
+                    <li><strong>Address:</strong> Panimalar Medical Hospital, Chennai, Tamil Nadu, India</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 MediLong. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+</body>
+</html>

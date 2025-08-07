@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Registration | Medilong</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .form-section {
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .form-section h2 {
+      color: #3498db;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #34495e;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 15px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn:hover {
+      background-color: #2980b9;
+    }
+
+    .submit-btn:disabled {
+      background-color: #95a5a6;
+      cursor: not-allowed;
+    }
+
+    .success-message {
+      text-align: center;
+      padding: 15px;
+      background-color: #2ecc71;
+      color: white;
+      border-radius: 5px;
+      margin-top: 20px;
+      display: none;
+      font-weight: bold;
+    }
+
+    .error-message {
+      text-align: center;
+      padding: 15px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 5px;
+      margin-top: 20px;
+      display: none;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Patient Registration</h1>
+    
+    <form id="patientForm">
+      <div class="form-section">
+        <h2>Personal Information</h2>
+        
+        <div class="form-group">
+          <label for="full_name">Full Name*</label>
+          <input type="text" id="full_name" name="full_name" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date_of_birth">Date of Birth</label>
+            <input type="date" id="date_of_birth" name="date_of_birth">
+          </div>
+          <div class="form-group">
+            <label for="age">Age*</label>
+            <input type="number" id="age" name="age" required min="1" max="120">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="gender">Gender*</label>
+            <select id="gender" name="gender" required>
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+              <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="blood_group">Blood Group</label>
+            <select id="blood_group" name="blood_group">
+              <option value="">Select</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="marital_status">Marital Status</label>
+          <select id="marital_status" name="marital_status">
+            <option value="">Select</option>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Widowed">Widowed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>Contact Information</h2>
+        
+        <div class="form-group">
+          <label for="phone_number">Phone Number*</label>
+          <input type="tel" id="phone_number" name="phone_number" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email">
+        </div>
+
+        <div class="form-group">
+          <label for="address">Address</label>
+          <textarea id="address" name="address" rows="2"></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" name="city">
+          </div>
+          <div class="form-group">
+            <label for="state">State</label>
+            <input type="text" id="state" name="state">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="zip_code">Zip Code</label>
+          <input type="text" id="zip_code" name="zip_code">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>Medical Information</h2>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="height_cm">Height (cm)</label>
+            <input type="number" id="height_cm" name="height_cm" min="50" max="250">
+          </div>
+          <div class="form-group">
+            <label for="weight_kg">Weight (kg)</label>
+            <input type="number" id="weight_kg" name="weight_kg" min="2" max="300" step="0.1">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="allergies">Allergies</label>
+          <textarea id="allergies" name="allergies" rows="2" placeholder="List any allergies you have"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="medical_conditions">Medical Conditions</label>
+          <textarea id="medical_conditions" name="medical_conditions" rows="3" placeholder="Any existing medical conditions"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="current_medications">Current Medications</label>
+          <textarea id="current_medications" name="current_medications" rows="2" placeholder="List any medications you're currently taking"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="medical_history">Medical History</label>
+          <textarea id="medical_history" name="medical_history" rows="3" placeholder="Previous illnesses, surgeries, etc."></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Register</button>
+    </form>
+
+    <div id="successMessage" class="success-message">
+      ✅ Registration successful! Your doctor will contact you soon.
+    </div>
+
+    <div id="errorMessage" class="error-message">
+      ❌ Registration failed. Please try again.
+    </div>
+  </div>
+
+  <script>
+    // ========== YOUR RENDER URL ==========
+    const API_BASE_URL = 'https://final-medilong-2.onrender.com';
+    // ====================================
+    
+    // Form submission handler
+    document.getElementById("patientForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById("submitBtn");
+      const successMessage = document.getElementById("successMessage");
+      const errorMessage = document.getElementById("errorMessage");
+      
+      // Hide previous messages
+      successMessage.style.display = "none";
+      errorMessage.style.display = "none";
+      
+      // Set loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Registering...";
+      
+      try {
+        // Get form data
+        const formData = new FormData(document.getElementById('patientForm'));
+        
+        console.log('Sending to:', API_BASE_URL + '/save_patient.php');
+        
+        // Send data to PHP backend
+        const response = await fetch(`${API_BASE_URL}/save_patient.php`, {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          console.log("Patient registered with ID: ", result.patient_id);
+          
+          // Show success message
+          document.getElementById("patientForm").reset();
+          successMessage.innerHTML = `✅ Registration successful!<br>Patient ID: <strong>${result.patient_id}</strong>`;
+          successMessage.style.display = "block";
+          
+          // Scroll to top to show message
+          window.scrollTo(0, 0);
+        } else {
+          throw new Error(result.message || 'Registration failed');
+        }
+        
+      } catch (error) {
+        console.error("Error registering patient: ", error);
+        errorMessage.textContent = `❌ ${error.message}`;
+        errorMessage.style.display = "block";
+        
+        // Scroll to top to show message
+        window.scrollTo(0, 0);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Register";
+      }
+    });
+
+    // Auto-calculate age when date of birth changes
+    document.getElementById("date_of_birth").addEventListener("change", function() {
+      const dob = new Date(this.value);
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      const monthDiff = today.getMonth() - dob.getMonth();
+      
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        age--;
+      }
+      
+      if (age >= 0 && age <= 120) {
+        document.getElementById("age").value = age;
+      }
+    });
+
+    // Phone number formatting (optional)
+    document.getElementById("phone_number").addEventListener("input", function() {
+      // Remove non-numeric characters except + and -
+      this.value = this.value.replace(/[^0-9+\-\s()]/g, '');
+    });
+  </script>
+</body>
+</html>

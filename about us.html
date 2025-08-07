@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - MediLong</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header .logo span {
+            color: #ffdd57;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffdd57;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 150px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            color: #333;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .about-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #007bff;
+        }
+
+        .about-section {
+            margin-bottom: 40px;
+        }
+
+        .about-section h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+
+        .about-section p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .team-member {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .team-member h4 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #007bff;
+        }
+
+        .team-member p {
+            font-size: 14px;
+            color: #777;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        footer .social-links {
+            margin-top: 10px;
+        }
+
+        footer .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        footer .social-links a:hover {
+            color: #ffdd57;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .about-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">MediLong<span>  Panimalar Medical Hospital</span></div>
+
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>About Us</h1>
+            <p>Discover the story behind MediLong and our commitment to healthcare excellence.</p>
+        </section>
+
+        <section class="about-container">
+            <h2>Who We Are</h2>
+
+            <!-- About Section 1: Mission -->
+            <div class="about-section">
+                <h3>Our Mission</h3>
+                <p>
+                    At MediLong, our mission is to provide compassionate, high-quality healthcare to our community. 
+                    We strive to improve the well-being of our patients through innovative treatments, state-of-the-art 
+                    technology, and a patient-centered approach.
+                </p>
+            </div>
+
+            <!-- About Section 2: History -->
+            <div class="about-section">
+                <h3>Our History</h3>
+                <p>
+                    Founded in 2005, MediLong has grown from a small clinic to a leading medical institution in Chennai. 
+                    Over the years, we have expanded our services, facilities, and team to meet the growing healthcare 
+                    needs of our community. Our commitment to excellence has earned us numerous awards and recognition.
+                </p>
+            </div>
+
+            <!-- About Section 3: Team -->
+            <div class="about-section">
+                <h3>Our Team</h3>
+                <p>
+                    Our team of dedicated healthcare professionals is the backbone of MediLong. From experienced doctors 
+                    and nurses to support staff, everyone works together to ensure the best possible care for our patients.
+                </p>
+                <div class="team-grid">
+                    <!-- Team Member 1 -->
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/100" alt="Dr. John Doe">
+                        <h4>Dr. John Doe</h4>
+                        <p>Chief Medical Officer</p>
+                    </div>
+
+                    <!-- Team Member 2 -->
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/100" alt="Dr. Jane Smith">
+                        <h4>Dr. Jane Smith</h4>
+                        <p>Senior Surgeon</p>
+                    </div>
+
+                    <!-- Team Member 3 -->
+                    <div class="team-member">
+                        <img src="https://via.placeholder.com/100" alt="Dr. Emily Brown">
+                        <h4>Dr. Emily Brown</h4>
+                        <p>Pediatric Specialist</p>
+                    </div>
+
+                    <!-- Add more team members as needed -->
+                </div>
+            </div>
+
+            <!-- About Section 4: Values -->
+            <div class="about-section">
+                <h3>Our Values</h3>
+                <p>
+                    At MediLong, we are guided by a set of core values that define who we are and how we serve our patients:
+                </p>
+                <ul>
+                    <li><strong>Compassion:</strong> We care deeply about our patients and their families.</li>
+                    <li><strong>Excellence:</strong> We strive for the highest standards in healthcare.</li>
+                    <li><strong>Innovation:</strong> We embrace new technologies and treatments.</li>
+                    <li><strong>Integrity:</strong> We are honest, ethical, and transparent in all we do.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 MediLong. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header .logo span {
+            color: #ffdd57;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffdd57;
+        }
+
+        .booking-form {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            color: #333;
+            animation: slideUp 1s ease-in-out;
+            text-align: center;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .booking-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #007bff;
+        }
+
+        .call-button {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .call-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .call-button:active {
+            transform: scale(0.95);
+        }
+
+        .call-button i {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .call-button.active {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+
+        .status-message {
+            font-size: 18px;
+            margin: 20px 0;
+            min-height: 60px;
+        }
+
+        .tracking {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            color: #333;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        #map-container {
+            width: 100%;
+            height: 400px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            background-color: #e0f7fa;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #info div {
+            margin: 10px 0;
+            font-size: 18px;
+            color: #555;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .booking-form, .tracking {
+                padding: 20px;
+            }
+            
+            .call-button {
+                width: 150px;
+                height: 150px;
+                font-size: 20px;
+            }
+            
+            .call-button i {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">MediLong<span>  Panimalar Medical Hospital</span></div>
+    </header>
+
+    <main>
+        <section class="booking-form">
+            <h2>One-Touch Ambulance Booking</h2>
+            <button class="call-button" id="emergencyButton">
+                <i class="fas fa-ambulance"></i>
+                EMERGENCY CALL
+            </button>
+            <div class="status-message" id="statusMessage">
+                Press the button to call an ambulance immediately
+            </div>
+        </section>
+
+        <section class="tracking">
+            <h1>Real-Time Ambulance Tracking</h1>
+            <div id="map-container">
+                <div id="map"></div>
+            </div>
+            <div id="info">
+                <div id="location">Waiting for ambulance dispatch...</div>
+                <div id="eta"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 MediLong. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        const map = L.map('map').setView([13.0827, 80.2707], 13); // Default to Chennai coordinates
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Variables for ambulance tracking
+        let ambulanceMarker;
+        let userMarker;
+        let isAmbulanceDispatched = false;
+        let userLat, userLng;
+
+        // Get user's current location
+        function getUserLocation() {
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        position => {
+                            userLat = position.coords.latitude;
+                            userLng = position.coords.longitude;
+                            resolve({ lat: userLat, lng: userLng });
+                        },
+                        error => {
+                            console.error("Geolocation error:", error);
+                            // Default to Panimalar Medical Hospital coordinates if geolocation fails
+                            userLat = 12.9716;
+                            userLng = 80.2213;
+                            resolve({ lat: userLat, lng: userLng });
+                        }
+                    );
+                } else {
+                    console.error("Geolocation is not supported by this browser.");
+                    // Default to Panimalar Medical Hospital coordinates
+                    userLat = 12.9716;
+                    userLng = 80.2213;
+                    resolve({ lat: userLat, lng: userLng });
+                }
+            });
+        }
+
+        // Simulate ambulance dispatch
+        async function dispatchAmbulance() {
+            const emergencyButton = document.getElementById('emergencyButton');
+            const statusMessage = document.getElementById('statusMessage');
+            
+            // Disable button during process
+            emergencyButton.disabled = true;
+            emergencyButton.classList.add('active');
+            
+            // Step 1: Getting user location
+            statusMessage.innerHTML = "Getting your location... <i class='fas fa-map-marker-alt'></i>";
+            
+            const userLocation = await getUserLocation();
+            
+            // Add user marker
+            userMarker = L.marker([userLocation.lat, userLocation.lng], {
+                icon: L.icon({
+                    iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png', // Person icon
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 30],
+                })
+            }).addTo(map);
+            userMarker.bindPopup("Your Location").openPopup();
+            
+            // Step 2: Finding nearest ambulance
+            statusMessage.innerHTML = "Finding nearest ambulance... <i class='fas fa-search'></i>";
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Set ambulance location (simulated - slightly away from user)
+            const ambulanceLat = userLocation.lat + (Math.random() * 0.02 - 0.01);
+            const ambulanceLng = userLocation.lng + (Math.random() * 0.02 - 0.01);
+            
+            // Add ambulance marker
+            ambulanceMarker = L.marker([ambulanceLat, ambulanceLng], {
+                icon: L.icon({
+                    iconUrl: 'https://cdn-icons-png.flaticon.com/512/3063/3063188.png', // Ambulance icon
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 40],
+                })
+            }).addTo(map);
+            ambulanceMarker.bindPopup("Ambulance").openPopup();
+            
+            // Fit map to show both markers
+            map.fitBounds([
+                [userLocation.lat, userLocation.lng],
+                [ambulanceLat, ambulanceLng]
+            ]);
+            
+            // Step 3: Dispatching ambulance
+            statusMessage.innerHTML = "Ambulance dispatched! <i class='fas fa-ambulance'></i>";
+            isAmbulanceDispatched = true;
+            
+            // Step 4: Start tracking
+            statusMessage.innerHTML = "Tracking ambulance... <i class='fas fa-map-marked-alt'></i>";
+            document.getElementById('location').innerText = Ambulance is on the way to your location;
+            
+            // Simulate ambulance movement
+            moveAmbulance(userLocation.lat, userLocation.lng);
+            
+            // Generate confirmation PDF
+            generateConfirmationPDF(userLocation);
+            
+            // Re-enable button after 30 seconds
+            setTimeout(() => {
+                emergencyButton.disabled = false;
+                emergencyButton.classList.remove('active');
+            }, 30000);
+        }
+
+        // Simulate ambulance movement
+        function moveAmbulance(targetLat, targetLng) {
+            if (!isAmbulanceDispatched) return;
+            
+            const currentPos = ambulanceMarker.getLatLng();
+            const distance = Math.sqrt(
+                Math.pow(targetLat - currentPos.lat, 2) + 
+                Math.pow(targetLng - currentPos.lng, 2)
+            );
+            
+            // If ambulance has arrived
+            if (distance < 0.0005) {
+                document.getElementById('location').innerText = "Ambulance has arrived at your location!";
+                document.getElementById('eta').innerText = "";
+                return;
+            }
+            
+            // Calculate new position (move 1/100th of the distance each step)
+            const newLat = currentPos.lat + (targetLat - currentPos.lat) * 0.01;
+            const newLng = currentPos.lng + (targetLng - currentPos.lng) * 0.01;
+            
+            // Update marker position
+            ambulanceMarker.setLatLng([newLat, newLng]);
+            
+            // Update ETA (simplified calculation)
+            const remainingDistance = Math.sqrt(
+                Math.pow(targetLat - newLat, 2) + 
+                Math.pow(targetLng - newLng, 2)
+            );
+            const etaMinutes = Math.floor(remainingDistance * 10000);
+            
+            document.getElementById('eta').innerText = ETA: ${etaMinutes} minutes;
+            
+            // Continue movement
+            setTimeout(() => moveAmbulance(targetLat, targetLng), 500);
+        }
+
+        // Generate confirmation PDF
+        function generateConfirmationPDF(userLocation) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Current date and time
+            const now = new Date();
+            const bookingTime = now.toLocaleString();
+            
+            // Generate random booking ID
+            const bookingId = 'AMB' + now.getFullYear() + 
+                             (now.getMonth()+1).toString().padStart(2, '0') + 
+                             now.getDate().toString().padStart(2, '0') + 
+                             Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+
+            // Add header
+            doc.setFontSize(22);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont('helvetica', 'bold');
+            doc.text('Panimalar Medical Hospital - Ambulance Booking', 20, 20);
+
+            // Add booking details
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont('helvetica', 'normal');
+            doc.text(Booking ID: ${bookingId}, 20, 40);
+            doc.text(Booking Time: ${bookingTime}, 20, 50);
+
+            // Add table for booking details
+            const data = [
+                ['Service Type', 'Emergency Ambulance Dispatch'],
+                ['Ambulance Type', 'Advanced Life Support (ALS)'],
+                ['Pickup Location', Lat: ${userLocation.lat.toFixed(6)}, Lng: ${userLocation.lng.toFixed(6)}],
+                ['Estimated Arrival', '5-10 minutes'],
+                ['Contact Number', '+91 9876543210'],
+                ['Total Amount', '₹500 (covered by insurance)'],
+            ];
+
+            doc.autoTable({
+                startY: 60,
+                head: [['Field', 'Details']],
+                body: data,
+                theme: 'striped',
+                styles: { fontSize: 10, cellPadding: 3 },
+                headStyles: { fillColor: [0, 123, 255] },
+            });
+
+            // Add map image (simplified - in real app you would generate a map image)
+            doc.setFontSize(10);
+            doc.text('Ambulance Route:', 20, doc.autoTable.previous.finalY + 15);
+            doc.setDrawColor(0, 123, 255);
+            doc.setFillColor(200, 230, 255);
+            doc.rect(20, doc.autoTable.previous.finalY + 20, 170, 80, 'FD');
+            doc.text('[Map would appear here in production]', 30, doc.autoTable.previous.finalY + 40);
+
+            // Add footer   
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Thank you for choosing Panimalar Medical Hospital', 20, doc.internal.pageSize.height - 20);
+            doc.text('Emergency Contact: 108 | Hospital: +91-44-27241111', 20, doc.internal.pageSize.height - 15);
+
+            // Save the PDF
+            doc.save(Ambulance_Booking_${bookingId}.pdf);
+        }
+
+        // Event listener for emergency button
+        document.getElementById('emergencyButton').addEventListener('click', function() {
+            if (!this.disabled) {
+                dispatchAmbulance();
+                
+                // In a real app, you would also initiate a phone call here
+                // For demo purposes, we'll just show an alert
+                setTimeout(() => {
+                    alert("Connecting to emergency services...\n\n(Note: In a production app, this would initiate an actual phone call to the IVRS system)");
+                }, 1000);
+            }
+        });
+
+        // Initialize map with Chennai view
+        map.setView([13.0827, 80.2707], 13);
+    </script>
+</body>
+</html>

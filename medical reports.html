@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Reports - MediLong</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #007bff, #00bfff);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        header .logo span {
+            color: #ffdd57;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffdd57;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 150px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 20px;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .reports-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            color: #333;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .reports-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+            color: #007bff;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .report-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .report-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .report-card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .report-card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .report-card .details {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .report-card .details span {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .report-card .report-download {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .report-card .report-download a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .report-card .report-download a:hover {
+            color: #0056b3;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        footer .social-links {
+            margin-top: 10px;
+        }
+
+        footer .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        footer .social-links a:hover {
+            color: #ffdd57;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .reports-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">MediLong<span>  Panimalar Medical Hospital</span></div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Medical Reports</h1>
+            <p>Access and manage your medical reports with ease</p>
+        </section>
+
+        <section class="reports-container">
+            <h2>Your Medical Reports</h2>
+            <div class="reports-grid">
+                <!-- Report Card 1 -->
+                <div class="report-card">
+                    <h3>Blood Test Report</h3>
+                    <p>Issued on: 2023-10-15</p>
+                    <div class="details">
+                        <span><strong>Patient:</strong> Manikandan</span>
+                        <span><strong>Lab:</strong> City Diagnostics</span>
+                        <span><strong>Status:</strong> Completed</span>
+                    </div>
+                    <div class="report-download">
+                        <a href="sterling-accuris-pathology-sample-report-unlocked.pdf"><i class="fas fa-download"></i> Download Report</a>
+                    </div>
+                </div>
+
+                <!-- Report Card 2 -->
+                <div class="report-card">
+                    <h3>X-Ray Report</h3>
+                    <p>Issued on: 2023-10-20</p>
+                    <div class="details">
+                        <span><strong>Patient:</strong> Sridhar</span>
+                        <span><strong>Lab:</strong> Metro Imaging</span>
+                        <span><strong>Status:</strong> Completed</span>
+                    </div>
+                    <div class="report-download">
+                        <a href="Xray_share.pdf"><i class="fas fa-download"></i> Download Report</a>
+                    </div>
+                </div>
+
+                <!-- Report Card 3 -->
+                <div class="report-card">
+                    <h3>ECG Report</h3>
+                    <p>Issued on: 2023-10-25</p>
+                    <div class="details">
+                        <span><strong>Patient:</strong> Kamalesh</span>
+                        <span><strong>Lab:</strong> HeartCare Diagnostics</span>
+                        <span><strong>Status:</strong> Completed</span>
+                    </div>
+                    <div class="report-download">
+                        <a href="page-1-1024x720.pdf"><i class="fas fa-download"></i> Download Report</a>
+                    </div>
+                </div>
+
+                <!-- Add more report cards as needed -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 MediLong. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+</body>
+</html>

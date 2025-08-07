@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediLong</title>
+  <link href="nickine.html">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+</head>
+<body>
+  <!-- Background Particles -->
+  <div id="particles-js"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div>
+      <img class="logo-img" src="medilonglogo1.jpg" alt="">
+    </div>
+    <div class="logo">MediLong</div>
+    <nav class="navbar">
+      <!-- Hamburger Menu for Mobile -->
+      <div class="hamburger" id="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <!-- Navigation Links -->
+      <ul class="nav-links" id="nav-links">
+        <li>
+          <p class="nav_img">🏠</p>
+          <a href="#home">Home</a>
+        </li>
+        <li class="dropdown">
+          <p class="nav_img">👨‍⚕️</p>
+          <a href="#doctors"> Find Doctors <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-content">
+            <div class="mega-menu">
+              <div class="mega-column">
+                <h4>Specialties</h4>
+                <a href="general medicene.html">General Medicine</a>
+                <a href="general surgery.html">General Surgery</a>
+                <a href="orthopedics.html">Orthopedics</a>
+                <a href="pediatrics.html">Pediatrics</a>
+                <a href="Obstetrics and Gynecology.html">Obstetrics & Gynaecology</a>
+                <a href="tb and chest medicine.html">TB and Chest Medicine</a>
+                <a href="opthalmology.html">Opthalmology</a>
+                <a href="radiology.html">Radiology</a>
+                <a href="psychiatry.html">Psychiatry</a>
+                <a href="dematology.html">Dermatology</a>
+                <a href="neurology.html">Neurology</a>
+                <a href="nephrology.html">Nephrology</a>
+
+                  </div>
+
+            </div>
+          </div>
+        </li>
+        <li>
+          <p class="nav_img">📅</p>
+          <a href="booking appoinment.html"> Book Appointment</a></li>
+        <li>
+          <p class="nav_img">🚑</p>
+          <a href="ambulance service.html">Ambulance Services</a></li>
+        <li class="dropdown">
+          <p class="nav_img"><i class='fas fa-clinic-medical'></i></p>
+          <a href="#medical shop">Medical Shop<i class="fas fa-chevron-down"></i> </a>
+          <div class="dropdown-content">
+            <a href="medicien.html">Mediciens</a>
+            <a href="Home delivery.html">Home Delivery</a>
+            <a href="shopping history.html">Shopping History</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <p class="nav_img">🗂</p>
+          <a href="#history">Patient History <i class="fas fa-chevron-down"></i></a>
+          <div class="dropdown-content">
+            <a href="appointment.html">Appointments</a>
+            <a href="priscription.html">Prescriptions</a>
+            <a href="medical reports.html">Medical Reports</a>
+          </div>
+        </li>
+        <li>
+          <p class="nav_img">📞</p>
+          <a href="contact us.html">Contact</a></li>
+        <li><a href="patient.html">Patient Details</a></li>
+      </ul>
+      <!-- Login/Signup & Dark Mode -->
+      <div class="nav-actions">
+        <a href="login.html">
+          <button class="login-btn">Login/Signup</button>
+      </a>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Book Doctor Appointments Online at Panimalar Medical Hospital</h1>
+    <p>Get quality healthcare without waiting in long queues. Hassle-free token booking!</p>
+    <div class="search-bar">
+      <input type="text" placeholder="Search by Doctor Name, Specialty, or Department">
+      <a href="booking appoinment.html"><button class="cta-primary">📅 Book Appointment</button></a>
+      <a href="ambulance book.html"><button class="cta-emergency">🚑 Book Ambulance</button></a>
+    </div>
+  </section>
+
+  <!-- Featured Services -->
+  <section class="featured-services">
+    <h2>Our Services</h2>
+    <div class="services-grid">
+      <div class="service">
+        <span>👨‍⚕️</span>
+        <h3>Consult a Doctor</h3>
+        <p>Find doctors and book slots.</p>
+      </div>
+      <div class="service">
+        <span>🚑</span>
+        <h3>Ambulance Booking</h3>
+        <p>Live tracking & emergency response.</p>
+      </div>
+      <div class="service">
+        <span>📄</span>
+        <h3>Medical Records</h3>
+        <p>Download reports & prescriptions.</p>
+      </div>
+      <div class="service">
+        <span>⏳</span>
+        <h3>Live Queue Status</h3>
+        <p>Track token & estimated wait time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Token Queue Status -->
+  <section class="live-queue">
+    <h2>Live Token Queue Status</h2>
+    <div class="queue-card">
+      <p>Dr. Arjun (Cardiologist) - Currently Seeing Token #12</p>
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+      <p>Estimated Wait Time: <span id="wait-time">15 minutes</span></p>
+    </div>
+  </section>
+
+  <!-- Top Doctors Section -->
+  <section class="top-doctors">
+    <h2>Our Top Doctors</h2>
+    <div class="doctors-grid">
+      <div class="doctor-card">
+        <img src="Dr.-Ravindran.jpg" alt="Dr.-Ravindran">
+        <h3>Dr.Ravindran</h3>
+        <p>General Medicine | 10+ Years Experience</p>
+        <p>⭐⭐⭐⭐⭐ (4.8/5)</p>
+        <button class="book-now">📅 Book Now</button>
+      </div>
+      <div class="doctor-card">
+        <img src="Dr-Madhumitha-M.jpg" alt="Dr-Madhumitha-M">
+        <h3>Dr. Madhumitha M</h3>
+        <p>General Surgery | 8+ Years Experience</p>
+        <p>⭐⭐⭐⭐⭐ (4.7/5)</p>
+        <button class="book-now">📅 Book Now</button>
+      </div>
+      <div class="doctor-card">
+        <img src="Dr.-Narayanan-V-L.jpg" alt="Dr.-Narayanan-V-L">
+        <h3>Dr. Narayanan V L</h3>
+        <p>Orthopedist | 12+ Years Experience</p>
+        <p>⭐⭐⭐⭐⭐ (4.9/5)</p>
+        <button class="book-now">📅 Book Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ambulance Booking Section -->
+  <section class="ambulance-booking">
+    <h2>Book Ambulance</h2>
+    <div class="ambulance-card">
+      <p>🚑 Emergency Ambulance Services</p>
+      <p>Call Now: <span class="emergency-number">+91 123 456 7890</span></p>
+      <button class="cta-emergency">🚑 Book Ambulance</button>
+    </div>
+  </section>
+
+  <!-- Patient History Section -->
+  <section class="patient-history">
+    <h2>Patient History</h2>
+    <div class="tabs">
+      <button class="tab-link active" data-tab="appointments">Appointments</button>
+      <button class="tab-link" data-tab="prescriptions">Prescriptions</button>
+      <button class="tab-link" data-tab="reports">Reports</button>
+    </div>
+    <div class="tab-content">
+      <div id="appointments" class="tab-pane active">
+        <p>Past Appointments:</p>
+        <ul>
+          <li>Dr. Arjun - Cardiology - 10/10/2023</li>
+          <li>Dr. Priya - Dermatology - 05/10/2023</li>
+        </ul>
+      </div>
+      <div id="prescriptions" class="tab-pane">
+        <p>Download Prescriptions:</p>
+        <ul>
+          <li><a href="#">Prescription_10_10_2023.pdf</a></li>
+          <li><a href="#">Prescription_05_10_2023.pdf</a></li>
+        </ul>
+      </div>
+      <div id="reports" class="tab-pane">
+        <p>Download Reports:</p>
+        <ul>
+          <li><a href="#">Blood_Test_Report_10_10_2023.pdf</a></li>
+          <li><a href="#">XRay_Report_05_10_2023.pdf</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Health Insights & Blog Section -->
+  <section class="health-insights">
+    <h2>Health Insights & Blog</h2>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <img src="https://via.placeholder.com/300" alt="Health Insight">
+        <h3>How to Choose the Right Doctor</h3>
+        <p>Learn how to select the best doctor for your needs.</p>
+        <a href="#">Read More →</a>
+      </div>
+      <div class="insight-card">
+        <img src="https://via.placeholder.com/300" alt="Health Insight">
+        <h3>Emergency Medical Response Guide</h3>
+        <p>Know what to do in case of a medical emergency.</p>
+        <a href="#">Read More →</a>
+      </div>
+      <div class="insight-card">
+        <img src="https://via.placeholder.com/300" alt="Health Insight">
+        <h3>Latest Medical Innovations</h3>
+        <p>Discover the latest advancements in medical technology.</p>
+        <a href="#">Read More →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <h2>What Our Patients Say</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p>"The best hospital experience I've ever had. Highly recommended!"</p>
+        <p>- Ramesh Kumar</p>
+      </div>
+      <div class="testimonial-card">
+        <p>"Doctors are very professional and caring. Thank you, MediLong!"</p>
+        <p>- Priya Sharma</p>
+      </div>
+      <div class="testimonial-card">
+        <p>"Ambulance services are super fast. Saved my life!"</p>
+        <p>- Arjun Singh</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-links">
+      <a href="about us.html">About</a>
+      <a href="privacy policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms</a>
+      <a href="carrier.html">Careers</a>
+    </div>
+    <div class="footer-contact">
+      <p>🚑 Emergency: +91 123 456 7890</p>
+      <p>📍 Panimalar Medical Hospital, Chennai, India</p>
+    </div>
+    <div class="social-media">
+      <a href="#">X</a>
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+      <a href="Facebook">Face Book</a>
+    </div>
+    <p class="made-by">Made with ❤️ by MediLong Team</p>
+  </footer>
+
+  <!-- Particles.js Library -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

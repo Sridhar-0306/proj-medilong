@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Doctor Dashboard | Medilong</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    /* Your existing styles, with minor adjustments for responsiveness and aesthetics */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: #333;
+    }
+
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0; left: 0;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      overflow-y: auto;
+    }
+    .sidebar h2 {
+      color: #fff;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      transition: background 0.3s;
+    }
+    .sidebar a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    /* Main content */
+    .main {
+      margin-left: 250px;
+      padding: 20px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-weight: 600;
+      font-size: 24px;
+      color: #2c3e50;
+    }
+    #clock {
+      font-weight: 500;
+      color: #34495e;
+    }
+
+    /* Dashboard stats cards */
+    .stats {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    .card {
+      flex: 1 1 200px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+    .card p {
+      font-size: 24px;
+      font-weight: 600;
+      color: #2980b9;
+    }
+
+    /* Patient list table */
+    #patientsTable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+    }
+    #patientsTable th, #patientsTable td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    #patientsTable th {
+      background: #efefef;
+    }
+    #patientsTable tbody tr:hover {
+      background: #f9f9f9;
+    }
+    /* Search box */
+    #searchPatients {
+      padding: 10px 15px;
+      width: 300px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    /* Modal styles for patient details */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      max-width: 700px;
+      width: 90%;
+      border-radius: 8px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #r23350;
+    }
+
+    @media(max-width: 900px) {
+      .main {
+        margin-left: 0;
+      }
+      .sidebar {
+        width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Medilong Dashboard</h2>
+    <a href="#">Dashboard Home</a>
+    <a href="#">Patient Management</a>
+    <a href="#">Appointments</a>
+    <a href="#">Messages</a>
+    <a href="#">Profile</a>
+    <a href="#">Logout</a>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <h1>Doctor Dashboard</h1>
+      <div id="clock"></div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats">
+      <div class="card" style="background:#f2f9ff;">
+        <h3>Total Patients</h3>
+        <p id="totalPatients">0</p>
+      </div>
+      <div class="card" style="background:#fef2e7;">
+        <h3>Today's Patients</h3>
+        <p id="todaysPatients">0</p>
+      </div>
+      <div class="card" style="background:#f2ffe7;">
+        <h3>Critical Patients</h3>
+        <p id="criticalPatients">0</p>
+      </div>
+    </div>
+
+    <!-- Search box -->
+    <input type="text" id="searchPatients" placeholder="Search patients by name, phone, condition..." />
+
+    <!-- Patients list table -->
+    <table id="patientsTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Phone</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Patient Details Modal -->
+  <div class="modal" id="patientDetailModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <h2>Patient Details</h2>
+      <div id="patientDetailsContent">Loading...</div>
+    </div>
+  </div>
+
+  <script>
+    // Your Render URL
+    const API_BASE_URL = 'https://final-medilong-2.onrender.com';
+
+    // Update clock
+    function updateClock() {
+      const clockDiv = document.getElementById('clock');
+      setInterval(() => {
+        const now = new Date();
+        clockDiv.innerText = now.toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour12:true });
+      }, 1000);
+    }
+    updateClock();
+
+    // Fetch and display patient stats
+    async function loadStats() {
+      try {
+        const res = await fetch(`${API_BASE_URL}/get_patients.php`);
+        const patients = await res.json();
+        document.getElementById('totalPatients').innerText = patients.length;
+
+        // Count today's patients
+        const todayStr = new Date().toLocaleDateString('en-CA');
+        const todayPatients = patients.filter(p => p.registration_date && p.registration_date.startsWith(todayStr));
+        document.getElementById('todaysPatients').innerText = todayPatients.length;
+
+        // For critical patients, assuming a condition property (if exists)
+        // For now, set it as total or 0 since no critical flag in backend
+        document.getElementById('criticalPatients').innerText = 0;
+
+      } catch (err) {
+        console.log('Error loading stats:', err);
+      }
+    }
+
+    // Load all patients
+    async function loadPatients() {
+      const tbody = document.querySelector('#patientsTable tbody');
+      tbody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/get_patients.php`);
+        const patients = await res.json();
+
+        // Filter by search if needed
+        const searchInput = document.getElementById('searchPatients').value.toLowerCase;
+
+        // Re-render table
+        tbody.innerHTML = '';
+
+        patients.forEach(p => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${p.full_name}</td>
+            <td>${p.age}</td>
+            <td>${p.gender}</td>
+            <td>${p.phone_number}</td>
+            <td><button data-id="${p.id}" class="view-details">View</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+
+        // Add click events to "View" buttons
+        document.querySelectorAll('.view-details').forEach(btn => {
+          btn.onclick = () => {
+            const id = btn.getAttribute('data-id');
+            showPatientDetails(id);
+          };
+        });
+
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="5">Error loading data</td></tr>';
+        console.log(err);
+      }
+    }
+
+    // Show patient details in modal
+    async function showPatientDetails(id) {
+      const modal = document.getElementById('patientDetailModal');
+      const contentDiv = document.getElementById('patientDetailsContent');
+
+      modal.style.display = 'flex';
+      contentDiv.innerHTML = 'Loading...';
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/get_patient_details.php?id=${id}`);
+        const patient = await res.json();
+
+        if (Object.keys(patient).length === 0 || patient.success === false) {
+          contentDiv.innerHTML = 'No details found.';
+        } else {
+          // Format patient details
+          let html = `<ul>
+            <li><strong>Name:</strong> ${patient.full_name}</li>
+            <li><strong>Age:</strong> ${patient.age}</li>
+            <li><strong>Gender:</strong> ${patient.gender}</li>
+            <li><strong>Phone:</strong> ${patient.phone_number}</li>
+            <li><strong>Email:</strong> ${patient.email}</li>
+            <li><strong>Address:</strong> ${patient.address}</li>
+            <li><strong>Medical Conditions:</strong> ${patient.medical_conditions}</li>
+            <li><strong>Allergies:</strong> ${patient.allergies}</li>
+            <li><strong>Current Medications:</strong> ${patient.current_medications}</li>
+            <li><strong>Medical History:</strong> ${patient.medical_history}</li>
+          </ul>`;
+          contentDiv.innerHTML = html;
+        }
+      } catch (err) {
+        contentDiv.innerHTML = 'Error fetching details.';
+        console.error(err);
+      }
+    }
+
+    // Close modal on click
+    document.getElementById('closeModal').onclick = () => {
+      document.getElementById('patientDetailModal').style.display = 'none';
+    };
+    window.onclick = (e) => {
+      if (e.target === document.getElementById('patientDetailModal')) {
+        document.getElementById('patientDetailModal').style.display = 'none';
+      }
+    };
+
+    // Search filter
+    document.getElementById('searchPatients').oninput = loadPatients;
+
+    // Initial load
+    window.onload = () => {
+      loadStats();
+      loadPatients();
+    };
+  </script>
+</body>
+</html>

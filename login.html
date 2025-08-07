@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        /* CSS goes here */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .loginbg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('loginbg1.jpg'); /* Replace with your hospital image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            filter: brightness(0.6);
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+            animation: slideUp 1s ease-in-out;
+            z-index: 1;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .input-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+        
+        .login-button:hover {
+            background-color: #0056b3;
+        }
+        
+        .social-login {
+            margin-top: 20px;
+        }
+        
+        .social-login p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        
+        .social-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+        
+        .google-button {
+            background-color: #db4437;
+            color: white;
+        }
+        
+        .google-button:hover {
+            background-color: #c13527;
+        }
+        
+        .facebook-button {
+            background-color: #3b5998;
+            color: white;
+        }
+        
+        .facebook-button:hover {
+            background-color: #2d4373;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .forgot-password a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .signup-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="loginbg">
+
+    </div>
+    <div class="login-container">
+        <h2>Login</h2>
+        <div class="input-group">
+            <label for="email" style="color: #000000;">Email </label>
+            <input type="email" id="email" placeholder="Enter your email">
+        </div>
+        <div class="input-group">
+            <label for="password"  style="color: #000000;">Password</label>
+            <input type="password" id="password" placeholder="Enter your password">
+        </div>
+        <button class="login-button">Login</button>
+
+        <div class="social-login">
+            <p  style="color: #000000;">Or login with</p>
+            <button class="social-button google-button">Login with Google</button>
+            <button class="social-button facebook-button">Login with Facebook</button>
+        </div>
+
+        <div class="forgot-password">
+            <a href="#">Forgot Password?</a>
+        </div>
+
+        <div class="signup-link"  style="color: #000000;">
+            Don't have an account? <a href="sign up.html">Sign Up</a>
+        </div>
+    </div>
+</body>
+</html>

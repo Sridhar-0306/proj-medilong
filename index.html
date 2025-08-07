@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MediLong - Comprehensive Healthcare Management System">
+    <meta name="keywords" content="healthcare, medical, hospital, management, portal">
+    <meta name="author" content="MediLong Technologies">
+    <meta property="og:title" content="MediLong Healthcare Portal">
+    <meta property="og:description" content="Advanced healthcare management system for patients and providers">
+    <meta property="og:image" content="https://medilong.example.com/assets/social-preview.jpg">
+    <meta property="og:url" content="https://medilong.example.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>MediLong | Advanced Healthcare Portal</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="splash.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="assets/fonts/Inter.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful');
+                }).catch(err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    
+    <!-- Favicon and Apple Touch Icons -->
+    <link rel="icon" href="/assets/favicon.ico" sizes="any">
+    <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --primary-dark: #2667cc;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --success: #06d6a0;
+            --warning: #ffbe0b;
+            --danger: #ef476f;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --bg-dark: #121212;
+            --bg-darker: #0a0a0a;
+            --text-primary: rgba(255, 255, 255, 0.87);
+            --text-secondary: rgba(255, 255, 255, 0.6);
+            --text-disabled: rgba(255, 255, 255, 0.38);
+            --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.3);
+            --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.3);
+            --transition-fast: all 0.15s ease;
+            --transition-medium: all 0.3s ease;
+            --transition-slow: all 0.5s ease;
+            --border-radius: 12px;
+            --border-radius-sm: 6px;
+        }
+        
+        [data-theme="light"] {
+            --bg-dark: #f8f9fa;
+            --bg-darker: #e9ecef;
+            --text-primary: rgba(0, 0, 0, 0.87);
+            --text-secondary: rgba(0, 0, 0, 0.6);
+            --text-disabled: rgba(0, 0, 0, 0.38);
+            --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        @font-face {
+            font-family: 'Inter';
+            src: url('/assets/fonts/Inter.woff2') format('woff2');
+            font-weight: 100 900;
+            font-display: swap;
+        }
+        
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Splash Screen */
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-darker);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .splash-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #splashVideo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+        
+        .splash-controls {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .volume-slider {
+            width: 100px;
+            height: 4px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+        
+        .skip-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .skip-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .splash-loader {
+            position: absolute;
+            bottom: 80px;
+            width: 120px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .splash-loader::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: var(--primary);
+            animation: loadProgress 2s ease-in-out forwards;
+        }
+        
+        @keyframes loadProgress {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+        
+        /* Main Content */
+        #main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            min-height: 100vh;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: var(--transition-fast);
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .welcome-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+        
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .portals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .portal-card {
+            background: var(--bg-darker);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            transition: var(--transition-medium);
+            box-shadow: var(--elevation-1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .portal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--elevation-2);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .portal-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .portal-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .portal-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .portal-link {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius-sm);
+            font-weight: 500;
+            transition: var(--transition-fast);
+            margin-top: auto;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .portal-login-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            font-weight: 500;
+            transition: var(--transition-fast);
+            margin-top: auto;
+            width: 100%;
+            max-width: 200px;
+            cursor: pointer;
+        }
+        
+        .portal-link:hover, .portal-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 134, 255, 0.3);
+        }
+
+        .test-credentials {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .test-credentials strong {
+            color: var(--primary);
+        }
+        
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: var(--bg-darker);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--elevation-2);
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-sm);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 134, 255, 0.3);
+        }
+        
+        .form-footer {
+            margin-top: 1rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .error-message {
+            color: var(--danger);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+        
+        .footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Accessibility focus styles */
+        a:focus, button:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        
+        /* Reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            
+            .portal-card:hover, .portal-link:hover, .portal-login-btn:hover, .login-btn:hover {
+                transform: none;
+            }
+            
+            .splash-loader::after {
+                animation: none;
+                width: 100%;
+            }
+
+            .modal-content {
+                animation: none;
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .portals-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .splash-controls {
+                bottom: 10px;
+                padding: 8px 15px;
+            }
+
+            .skip-btn {
+                padding: 6px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<!-- Splash Screen with Video Controls -->
+<div id="splash">
+    <div class="splash-content">
+        <video playsinline id="splashVideo">
+            <source src="splash.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="splash-controls">
+            <button class="control-btn" id="playPauseBtn">▶</button>
+            <div class="volume-control">
+                <button class="control-btn" id="muteBtn">🔊</button>
+                <input type="range" min="0" max="1" step="0.01" value="0.7" class="volume-slider" id="volumeSlider">
+            </div>
+            <button class="skip-btn" id="skipBtn">Skip Intro</button>
+        </div>
+        <div class="splash-loader"></div>
+    </div>
+</div>
+
+<!-- Login Modal -->
+<div class="modal" id="loginModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title" id="modalTitle">Portal Login</h2>
+            <button class="close-modal" id="closeModalBtn">&times;</button>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" class="form-input" required>
+                <div class="error-message" id="usernameError">Invalid username</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <div class="password-container">
+                    <input type="password" id="password" class="form-input" required>
+                    <button type="button" class="toggle-password" id="togglePasswordBtn">👁️</button>
+                </div>
+                <div class="error-message" id="passwordError">Invalid password</div>
+            </div>
+            
+            <button type="submit" class="login-btn" id="submitLoginBtn">Login</button>
+            
+            <div class="form-footer">
+                <p>Contact IT support if you forgot your credentials</p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Main Website Content -->
+<div id="main-content">
+    <header class="main-header">
+        <div class="logo">
+            <img src="medilonglogo1.jpg" alt="MediLong Logo" width="40" height="40">
+            <span class="logo-text">MediLong</span>
+        </div>
+        <button class="theme-toggle" aria-label="Toggle dark/light mode" id="themeToggle">
+            <span id="themeIcon">🌙</span>
+        </button>
+    </header>
+    
+    <main>
+        <section class="welcome-section">
+            <h1 class="welcome-title">Advanced Healthcare Management</h1>
+            <p class="welcome-subtitle">
+                Access your personalized healthcare portal with secure, real-time medical data and seamless communication.
+            </p>
+        </section>
+        
+        <section class="portals-section">
+            <div class="portals-grid">
+                <!-- Patient Portal -->
+                <article class="portal-card">
+                    <div class="portal-icon">👤</div>
+                    <h2 class="portal-title">Patient Portal</h2>
+                    <p class="portal-description">
+                        Access your medical records, schedule appointments, and communicate with your healthcare providers.
+                    </p>
+                    <a href="main.html" class="portal-link">Enter Portal</a>
+                </article>
+                
+                <!-- Admin Portal -->
+                <article class="portal-card">
+                    <div class="portal-icon">🔒</div>
+                    <h2 class="portal-title">Admin Portal</h2>
+                    <p class="portal-description">
+                        Manage system settings, user accounts, and overall healthcare facility operations.
+                    </p>
+                    <button class="portal-login-btn" id="adminLoginBtn">Login Required</button>
+                    <div class="test-credentials">
+                        <strong>Test Credentials:</strong><br>
+                        Username: <strong>admin</strong><br>
+                        Password: <strong>123456</strong>
+                    </div>
+                </article>
+                
+                <!-- Reception Portal -->
+                <article class="portal-card">
+                    <div class="portal-icon">🏥</div>
+                    <h2 class="portal-title">Reception Portal</h2>
+                    <p class="portal-description">
+                        Handle patient check-ins, appointments, and front desk operations efficiently.
+                    </p>
+                    <button class="portal-login-btn" id="receptionLoginBtn">Login Required</button>
+                    <div class="test-credentials">
+                        <strong>Test Credentials:</strong><br>
+                        Username: <strong>reception</strong><br>
+                        Password: <strong>123456</strong>
+                    </div>
+                </article>
+                
+                <!-- Doctor Portal -->
+                <article class="portal-card">
+                    <div class="portal-icon">👨‍⚕️</div>
+                    <h2 class="portal-title">Doctor Portal</h2>
+                    <p class="portal-description">
+                        Access patient records, prescribe medications, and manage your clinical workflow.
+                    </p>
+                    <button class="portal-login-btn" id="doctorLoginBtn">Login Required</button>
+                    <div class="test-credentials">
+                        <strong>Test Credentials:</strong><br>
+                        Username: <strong>manikandan</strong><br>
+                        Password: <strong>123456</strong>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="footer">
+        <p>&copy; 2023 MediLong Healthcare Systems. All rights reserved.</p>
+        <p><a href="privacy.html" style="color: var(--primary);">Privacy Policy</a> | <a href="terms.html" style="color: var(--primary);">Terms of Service</a></p>
+    </footer>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // DOM Elements
+        const splash = document.getElementById('splash');
+        const splashVideo = document.getElementById('splashVideo');
+        const mainContent = document.getElementById('main-content');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const muteBtn = document.getElementById('muteBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const skipBtn = document.getElementById('skipBtn');
+        
+        // Login elements
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const receptionLoginBtn = document.getElementById('receptionLoginBtn');
+        const doctorLoginBtn = document.getElementById('doctorLoginBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+        const submitLoginBtn = document.getElementById('submitLoginBtn');
+        const loginForm = document.getElementById('loginForm');
+        const modal = document.getElementById('loginModal');
+        const modalTitle = document.getElementById('modalTitle');
+        
+        // Video State
+        let videoPlaying = false;
+        let videoPlayedOnce = false;
+
+        // User database with proper redirect URLs
+        const users = {
+            doctor: [
+                { username: 'manikandan', password: '123456', name: 'Dr. Manikandan', redirect: 'doctor.html' }
+            ],
+            reception: [
+                { username: 'reception', password: '123456', name: 'Reception Staff', redirect: 'reception.html' }
+            ],
+            admin: [
+                { username: 'admin', password: '123456', name: 'System Admin', redirect: 'admin.html' }
+            ]
+        };
+        
+        // Current portal being accessed
+        let currentPortal = '';
+        
+        // Initialize video with sound (no autoplay)
+        function initializeVideo() {
+            splashVideo.muted = false;
+            splashVideo.volume = 0.7;
+            volumeSlider.value = 0.7;
+            splashVideo.loop = false;
+            
+            const startVideo = () => {
+                if (videoPlayedOnce) return;
+                
+                splashVideo.play().then(() => {
+                    videoPlaying = true;
+                    videoPlayedOnce = true;
+                    playPauseBtn.textContent = '⏸';
+                    document.body.removeEventListener('click', startVideo);
+                    document.body.removeEventListener('keypress', startVideo);
+                }).catch(error => {
+                    console.error('Video playback failed:', error);
+                    splashVideo.muted = true;
+                    muteBtn.textContent = '🔇';
+                    splashVideo.play().then(() => {
+                        videoPlaying = true;
+                        videoPlayedOnce = true;
+                        playPauseBtn.textContent = '⏸';
+                    });
+                });
+            };
+            
+            document.body.addEventListener('click', startVideo, { once: true });
+            document.body.addEventListener('keypress', startVideo, { once: true });
+        }
+
+        // Handle splash screen transition
+        function transitionToMain() {
+            splash.style.opacity = '0';
+            splash.style.visibility = 'hidden';
+            
+            mainContent.style.display = 'block';
+            setTimeout(() => {
+                mainContent.style.opacity = '1';
+            }, 50);
+            
+            splashVideo.pause();
+            splashVideo.currentTime = 0;
+            splashVideo.removeAttribute('src');
+            splashVideo.load();
+        }
+
+        // Video control functions
+        function togglePlayPause() {
+            if (videoPlaying) {
+                splashVideo.pause();
+                playPauseBtn.textContent = '▶';
+            } else {
+                splashVideo.play().then(() => {
+                    playPauseBtn.textContent = '⏸';
+                });
+            }
+            videoPlaying = !videoPlaying;
+        }
+
+        function toggleMute() {
+            splashVideo.muted = !splashVideo.muted;
+            muteBtn.textContent = splashVideo.muted ? '🔇' : '🔊';
+        }
+
+        function updateVolume() {
+            splashVideo.volume = volumeSlider.value;
+            splashVideo.muted = false;
+            muteBtn.textContent = '🔊';
+        }
+
+        // Login modal functions
+        function openLoginModal(portal) {
+            currentPortal = portal;
+            
+            switch(portal) {
+                case 'doctor':
+                    modalTitle.textContent = 'Doctor Portal Login';
+                    break;
+                case 'reception':
+                    modalTitle.textContent = 'Reception Portal Login';
+                    break;
+                case 'admin':
+                    modalTitle.textContent = 'Admin Portal Login';
+                    break;
+            }
+            
+            const testUser = users[portal][0];
+            document.getElementById('username').value = testUser.username;
+            document.getElementById('password').value = testUser.password;
+            
+            modal.style.display = 'flex';
+            document.getElementById('username').focus();
+        }
+        
+        function closeModal() {
+            modal.style.display = 'none';
+            clearErrors();
+            loginForm.reset();
+        }
+        
+        function clearErrors() {
+            document.getElementById('usernameError').style.display = 'none';
+            document.getElementById('passwordError').style.display = 'none';
+        }
+        
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePasswordBtn.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                togglePasswordBtn.textContent = '👁️';
+            }
+        }
+        
+        function handleLogin(event) {
+            event.preventDefault();
+            clearErrors();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            let validUser = false;
+            
+            if (users[currentPortal]) {
+                for (const user of users[currentPortal]) {
+                    if (user.username === username && user.password === password) {
+                        validUser = true;
+                        window.location.href = user.redirect;
+                        return;
+                    }
+                }
+            }
+            
+            if (!validUser) {
+                document.getElementById('usernameError').style.display = 'block';
+                document.getElementById('passwordError').style.display = 'block';
+            }
+        }
+
+        // Theme toggle functionality
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            themeIcon.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+            localStorage.setItem('theme', newTheme);
+        }
+        
+        // Initialize theme from localStorage or preference
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+            themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+        
+        // Event Listeners
+        themeToggle.addEventListener('click', toggleTheme);
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        muteBtn.addEventListener('click', toggleMute);
+        volumeSlider.addEventListener('input', updateVolume);
+        skipBtn.addEventListener('click', transitionToMain);
+        splashVideo.addEventListener('ended', transitionToMain);
+        
+        // Login button listeners
+        adminLoginBtn.addEventListener('click', () => openLoginModal('admin'));
+        receptionLoginBtn.addEventListener('click', () => openLoginModal('reception'));
+        doctorLoginBtn.addEventListener('click', () => openLoginModal('doctor'));
+        
+        closeModalBtn.addEventListener('click', closeModal);
+        togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+        loginForm.addEventListener('submit', handleLogin);
+        
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        
+        // Initialize
+        initTheme();
+        initializeVideo();
+        
+        // Fallback if video doesn't load
+        setTimeout(() => {
+            if (!videoPlaying && !videoPlayedOnce) {
+                transitionToMain();
+            }
+        }, 10000);
+        
+        // Register service worker if supported
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful');
+                }).catch(err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    });
+</script>
+
+<!-- Fallback for older browsers -->
+<noscript>
+    <style>
+        #splash { display: none !important; }
+        #main-content { display: block !important; opacity: 1 !important; }
+    </style>
+    <div class="noscript-warning">
+        <h1>JavaScript is disabled</h1>
+        <p>For full functionality of this site, please enable JavaScript in your browser.</p>
+        <p>Select your portal:</p>
+        <ul>
+            <li><a href="main.html">Patient Portal</a></li>
+            <li><a href="admin.html">Admin Portal</a></li>
+            <li><a href="reception.html">Reception Portal</a></li>
+            <li><a href="doctor.html">Doctor Portal</a></li>
+        </ul>
+    </div>
+</noscript>
+</body>
+</html>

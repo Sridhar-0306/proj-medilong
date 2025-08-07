@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My App</title>
+  <style>
+    /* Previous styles remain the same */
+    
+    /* Add this new style for mute button */
+    .mute-button {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 10000;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+    
+    .mute-button:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+<div id="splash">
+  <img src="medilonglogo1.jpg" alt="App Logo">
+</div>
+
+<div id="main">
+  <h1>Welcome to Medilong!</h1>
+  <p>Your health companion at your fingertips. Let's start your journey towards better health!</p>
+</div>
+
+<!-- Audio player (hidden controls by default) -->
+<div class="audio-player">
+  <audio id="bgMusic" loop>
+    <!-- Replace with your audio file -->
+    <source src="voice.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</div>
+
+<!-- Add mute button -->
+<button class="mute-button" id="muteBtn">Unmute</button>
+
+<script>
+  window.addEventListener('load', () => {
+    const bgMusic = document.getElementById('bgMusic');
+    const muteBtn = document.getElementById('muteBtn');
+    
+    // Set initial state
+    bgMusic.muted = true;
+    muteBtn.textContent = 'Unmute';
+    
+    // Mute/unmute on button click
+    muteBtn.addEventListener('click', () => {
+      bgMusic.muted = !bgMusic.muted;
+      muteBtn.textContent = bgMusic.muted ? 'Unmute' : 'Mute';
+      
+      // Try to play when unmuting (required for some browsers)
+      if (!bgMusic.muted) {
+        bgMusic.play().catch(e => console.log("Playback failed:", e));
+      }
+    });
+    
+    setTimeout(() => {
+      document.body.classList.add('loaded');
+      
+      // Redirect to index page after showing the welcome message for 2 seconds
+      setTimeout(() => {
+        window.location.href = "manoj.html";
+      }, 2000);
+    }, 2000);
+  });
+
+  // Alternative: Start music on any user interaction with the document
+  document.addEventListener('click', function initialPlay() {
+    const bgMusic = document.getElementById('bgMusic');
+    bgMusic.muted = false;
+    bgMusic.play().catch(e => console.log("Playback failed:", e));
+    
+    // Remove this listener after first interaction
+    document.removeEventListener('click', initialPlay);
+  }, { once: true });
+</script>
+
+</body>
+</html>
