@@ -129,7 +129,32 @@
   <div class="container">
     <h1>Patient Registration</h1>
     
-    <form id="patientForm">
+    <form id="patientForm" method="post" action="#">
+  <div class="form-section">
+    <h2>Personal Information</h2>
+
+    <div class="form-group">
+      <label for="full_name">Full Name*</label>
+      <input type="text" id="full_name" name="full_name" required>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="date_of_birth">Date of Birth</label>
+        <input type="date" id="date_of_birth" name="date_of_birth">
+      </div>
+      <div class="form-group">
+        <label for="age">Age*</label>
+        <input type="number" id="age" name="age" required min="1" max="120">
+      </div>
+    </div>
+
+    <!-- other form inputs -->
+
+    <button type="submit" id="submitBtn">Register</button>
+  </div>
+</form>
+
       <div class="form-section">
         <h2>Personal Information</h2>
         
